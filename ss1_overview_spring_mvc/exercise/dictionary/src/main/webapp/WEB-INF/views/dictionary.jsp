@@ -13,7 +13,7 @@
 <body>
 <h2>Vietnamese Dictionary</h2>
 <form action="/dictionary" method="post">
-    <input type="text" name="translate" placeholder="Enter your word: "/>
+    <input type="text" name="eng" placeholder="Enter your word: "/>
     <input type = "submit" id = "submit" value = "Translate"/>
 </form>
 <p>Kết quả là : ${result}</p>

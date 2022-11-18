@@ -16,7 +16,7 @@ public class DictionaryService implements IDictionaryService {
         stringMap.put("lion","sư tử");
     }
     @Override
-    public Map<String, String> result() {
+    public Map<String, String> translate() {
         return stringMap;
     }
 }

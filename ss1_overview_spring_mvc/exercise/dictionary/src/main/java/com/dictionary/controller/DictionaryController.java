@@ -20,8 +20,11 @@ public class DictionaryController {
     }
 
     @PostMapping("")
-    public String result(@RequestParam String translate, Model model){
-        String result = dictionaryService.result().get(translate);
+    public String result(@RequestParam String eng, Model model){
+        String result = dictionaryService.translate().get(eng);
+        if (result == null) {
+            result = "Không tìm thấy";
+        }
         model.addAttribute("result", result);
         return "dictionary";
     }
