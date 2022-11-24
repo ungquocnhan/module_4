@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+</head>
+<body>
+<div class="notify">
+    <div th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
+</div>
+<p>
+    <a th:href="@{/product/create}" class="btn btn-sm btn-primary">
+        Add new product
+    </a>
+</p>
+<form th:action="@{/product/search}" method="get">
+    <pre>Name search:   <input type="text" name="name" th:value="${name}"></pre>
+    <pre>               <button>Search</button></pre>
+</form>
+<h2><a  th:href="@{/product}">List Product</a></h2>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">STT</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Description</th>
+        <th scope="col">Manufacture</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+        <th scope="col">View</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product, productStatus : ${productList}">
+        <td th:text="${productStatus.count}"></td>
+        <td th:text="${product.getName()}"></td>
+        <td th:text="${product.getPrice()}"></td>
+        <td th:text="${product.getDescription()}"></td>
+        <td th:text="${product.getManufacture()}"></td>
+        <td>
+            <a th:href="@{/product/{id}/edit(id=${product.getId()})}" class="btn btn-secondary btn-sm">Edit</a>
+        </td>
+        <td>
+            <a th:attr="onclick=|infoDelete('${product.id}','${product.name}')|"
+               class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                Delete
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/product/{id}/view(id=${product.getId()})}" class="btn btn-dark btn-sm">View</a>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form th:action="@{/product/delete}" th:method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input name="deleteId" hidden id="deleteId">
+                    <pre>Are you want to delete product ?</pre>
+                    <pre style="color: darkred" id="deleteName"></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    function infoDelete(id, name) {
+        document.getElementById("deleteId").value = id;
+        document.getElementById("deleteName").innerText = name;
+    }
+</script>
+</html>
