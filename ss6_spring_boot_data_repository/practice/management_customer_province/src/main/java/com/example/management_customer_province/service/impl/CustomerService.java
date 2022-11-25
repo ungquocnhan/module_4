@@ -1,8 +1,8 @@
-package com.codegym.management_customer_spring_boot.service.impl;
+package com.example.management_customer_province.service.impl;
 
-import com.codegym.management_customer_spring_boot.model.Customer;
-import com.codegym.management_customer_spring_boot.repository.ICustomerRepository;
-import com.codegym.management_customer_spring_boot.service.ICustomerService;
+import com.example.management_customer_province.model.Customer;
+import com.example.management_customer_province.repository.ICustomerRepository;
+import com.example.management_customer_province.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

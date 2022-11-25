@@ -1,7 +1,9 @@
-package com.codegym.management_customer_spring_boot.controller;
+package com.example.management_customer_province.controller;
 
-import com.codegym.management_customer_spring_boot.model.Customer;
-import com.codegym.management_customer_spring_boot.service.ICustomerService;
+import com.example.management_customer_province.model.Customer;
+import com.example.management_customer_province.model.Province;
+import com.example.management_customer_province.service.ICustomerService;
+import com.example.management_customer_province.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,16 @@ import java.util.Optional;
 @Controller
 public class CustomerController {
     private final ICustomerService customerService;
+    private final IProvinceService provinceService;
     @Autowired
-    public CustomerController(ICustomerService customerService) {
+    public CustomerController(ICustomerService customerService, IProvinceService provinceService) {
         this.customerService = customerService;
+        this.provinceService = provinceService;
+    }
+
+    @ModelAttribute("provinces")
+    public Iterable<Province> provinces(){
+        return provinceService.findAll();
     }
 
     @GetMapping("/customer")
