@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public String save(Product product, RedirectAttributes redirectAttributes) {
+    public String save(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes) {
         productService.save(product);
         redirectAttributes.addFlashAttribute("message", "Add Success");
         return "redirect:/product";
@@ -57,7 +57,7 @@ public class ProductController {
     }
 
     @PostMapping("/update")
-    public String update(Product product, RedirectAttributes redirectAttributes) {
+    public String update(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes) {
         productService.update(product.getId(), product);
         redirectAttributes.addFlashAttribute("message", "Edit success");
         return "redirect:/product";
