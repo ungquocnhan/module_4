@@ -5,6 +5,8 @@ import com.example.management_customer_province.model.Province;
 import com.example.management_customer_province.service.ICustomerService;
 import com.example.management_customer_province.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,8 +31,9 @@ public class CustomerController {
     }
 
     @GetMapping("")
-    public String showList(Model model) {
-        Iterable<Customer> customerList = customerService.findAll();
+    public String showList(Pageable pageable, Model model) {
+//        Iterable<Customer> customerList = customerService.findAll();
+        Page<Customer> customerList = customerService.findAll(pageable);
         model.addAttribute("customerList", customerList);
         return "/customer/list";
     }
@@ -56,7 +59,7 @@ public class CustomerController {
             model.addAttribute("customer", customer.get());
             return "/customer/edit";
         } else {
-            return "/error.404";
+            return "/error-404";
         }
     }
 
@@ -74,7 +77,7 @@ public class CustomerController {
             model.addAttribute("customer", customer.get());
             return "/customer/delete";
         } else {
-            return "/error.404";
+            return "/error-404";
         }
     }
 

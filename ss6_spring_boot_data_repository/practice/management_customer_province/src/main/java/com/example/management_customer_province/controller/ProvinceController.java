@@ -1,6 +1,8 @@
 package com.example.management_customer_province.controller;
 
+import com.example.management_customer_province.model.Customer;
 import com.example.management_customer_province.model.Province;
+import com.example.management_customer_province.service.ICustomerService;
 import com.example.management_customer_province.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class ProvinceController {
     public ProvinceController(IProvinceService provinceService) {
         this.provinceService = provinceService;
     }
+
+    @Autowired
+    private ICustomerService customerService;
 
     @GetMapping("/province")
     public String showList(Model model){
@@ -50,7 +55,7 @@ public class ProvinceController {
             model.addAttribute("province", province.get());
             return "/province/edit";
         }else {
-            return "/province/error-404";
+            return "/error-404";
         }
     }
 
@@ -79,4 +84,16 @@ public class ProvinceController {
         return "redirect:/province";
     }
 
+    @GetMapping("/view-province/{id}")
+    public String viewProvince(@PathVariable("id") int id, Model model){
+        Optional<Province> province = provinceService.findById(id);
+        if(!province.isPresent()){
+            return "/error-404";
+        }
+
+        Iterable<Customer> customers = customerService.findAllByProvince(province.get());
+        model.addAttribute("province", province.get());
+        model.addAttribute("customers", customers);
+        return "/province/view";
+    }
 }

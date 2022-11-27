@@ -1,9 +1,12 @@
 package com.example.management_customer_province.service.impl;
 
 import com.example.management_customer_province.model.Customer;
+import com.example.management_customer_province.model.Province;
 import com.example.management_customer_province.repository.ICustomerRepository;
 import com.example.management_customer_province.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -35,5 +38,15 @@ public class CustomerService implements ICustomerService {
     @Override
     public void remove(Integer id) {
         customerRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<Customer> findAllByProvince(Province province) {
+        return customerRepository.findAllByProvince(province);
+    }
+
+    @Override
+    public Page<Customer> findAll(Pageable pageable) {
+        return customerRepository.findAll(pageable);
     }
 }
