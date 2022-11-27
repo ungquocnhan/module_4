@@ -11,7 +11,7 @@
     <a href="/province">Province List</a>
 </p>
 
-<form th:action="@{/delete}" th:object="${province}" method="post">
+<form th:action="@{/delete-province}" th:object="${province}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <table>
         <tr>

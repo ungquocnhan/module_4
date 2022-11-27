@@ -13,7 +13,7 @@
     <p th:text="${message}"></p>
 </th:block>
 
-<form th:action="@{/save}" th:object="${customer}" method="post">
+<form th:action="@{/customer/save}" th:object="${customer}" method="post">
     <table>
         <tr>
             <td>First name:</td>
@@ -26,7 +26,7 @@
         <tr>
             <td>Province:</td>
             <td>
-                <select  th:field="*{province}">
+                <select th:field="*{province}">
                     <option th:each="p : ${provinces}" th:value="${p.id}" th:text="${p.name}"></option>
                 </select>
             </td>

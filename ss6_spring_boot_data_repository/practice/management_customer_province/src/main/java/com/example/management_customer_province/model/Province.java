@@ -8,9 +8,10 @@ import java.util.List;
 public class Province {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Column(name = "province_id")
     private int id;
     private String name;
-    @OneToMany(targetEntity = Customer.class)
+    @OneToMany(mappedBy = "province")
     private List<Customer> customers;
 
     public Province() {

@@ -9,7 +9,7 @@
 <p>
     <a href="/province">Province List</a>
 </p>
-<form th:action="@{/save}" th:object="${province}" method="post">
+<form th:action="@{/update-province}" th:object="${province}" method="post">
     <input type="hidden" name="id" th:field="*{id}">
     <table>
         <tr>

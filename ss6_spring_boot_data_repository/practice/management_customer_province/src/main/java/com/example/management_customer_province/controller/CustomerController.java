@@ -7,15 +7,13 @@ import com.example.management_customer_province.service.IProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
 @Controller
+@RequestMapping("/customer")
 public class CustomerController {
     private final ICustomerService customerService;
     private final IProvinceService provinceService;
@@ -30,7 +28,7 @@ public class CustomerController {
         return provinceService.findAll();
     }
 
-    @GetMapping("/customer")
+    @GetMapping("")
     public String showList(Model model) {
         Iterable<Customer> customerList = customerService.findAll();
         model.addAttribute("customerList", customerList);
@@ -58,7 +56,7 @@ public class CustomerController {
             model.addAttribute("customer", customer.get());
             return "/customer/edit";
         } else {
-            return "/customer/error.404";
+            return "/error.404";
         }
     }
 
@@ -76,7 +74,7 @@ public class CustomerController {
             model.addAttribute("customer", customer.get());
             return "/customer/delete";
         } else {
-            return "/customer/error.404";
+            return "/error.404";
         }
     }
 

@@ -29,21 +29,21 @@ public class ProvinceController {
         return "/province/list";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/create-province")
     public String showCreateForm(Model model){
         Province province = new Province();
         model.addAttribute("province", province);
         return "/province/create";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/save-province")
     public String update(@ModelAttribute("province") Province province, RedirectAttributes redirectAttributes){
         provinceService.save(province);
         redirectAttributes.addFlashAttribute("message", "Create Success");
         return "redirect:/province";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/edit-province/{id}")
         public String showEditForm(@PathVariable("id") int id, Model model){
         Optional<Province> province = provinceService.findById(id);
         if(province.isPresent()){
@@ -54,25 +54,25 @@ public class ProvinceController {
         }
     }
 
-    @PostMapping("/save")
+    @PostMapping("/update-province")
     public String save(@ModelAttribute("province") Province province, RedirectAttributes redirectAttributes){
         provinceService.save(province);
         redirectAttributes.addFlashAttribute("message", "Edit Success");
         return "redirect:/province";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/delete-province/{id}")
     public String showDelete(@PathVariable("id") int id, Model model){
         Optional<Province> province = provinceService.findById(id);
         if(province.isPresent()){
             model.addAttribute("province", province);
             return "/province/delete";
         }else {
-            return "/province/error-404";
+            return "/error-404";
         }
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/delete-province")
     public String delete(@ModelAttribute("province") Province province, RedirectAttributes redirectAttributes){
         provinceService.remove(province.getId());
         redirectAttributes.addFlashAttribute("message","Delete success");

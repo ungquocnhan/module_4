@@ -23,6 +23,7 @@ public class BlogController {
     public String showListBlog(@RequestParam(defaultValue = "") String search, Model model) {
         List<Blog> blogList = blogService.findByAuthorContainingOrContentContainingOrTitleContaining(search);
         model.addAttribute("blogList", blogList);
+        model.addAttribute("search", search);
         return "/blog/list";
     }
 

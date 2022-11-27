@@ -5,7 +5,7 @@
     <title>Provinces</title>
 </head>
 <body>
-<a href="/create">Create new province</a>
+<a href="/create-province">Create new province</a>
 <h1>Provinces</h1>
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
@@ -19,8 +19,8 @@
     <th:block th:each="province : ${provinces}">
         <tr>
             <td th:text="${province.name}"></td>
-            <td><a th:href="@{/edit/__${province.id}}">Edit</a></td>
-            <td><a th:href="@{/delete/__${province.id}}">Delete</a></td>
+            <td><a th:href="@{/edit-province/__${province.id}}">Edit</a></td>
+            <td><a th:href="@{/delete-province/__${province.id}}">Delete</a></td>
         </tr>
     </th:block>
 </table>
