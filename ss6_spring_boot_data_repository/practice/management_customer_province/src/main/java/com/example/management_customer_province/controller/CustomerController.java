@@ -31,10 +31,17 @@ public class CustomerController {
     }
 
     @GetMapping("")
-    public String showList(Pageable pageable, Model model) {
+    public String showList(@RequestParam("search") Optional<String> search, Pageable pageable, Model model) {
 //        Iterable<Customer> customerList = customerService.findAll();
-        Page<Customer> customerList = customerService.findAll(pageable);
+//        Page<Customer> customerList = customerService.findAll(pageable);
+        Page<Customer> customerList;
+        if(search.isPresent()){
+            customerList = customerService.findAllByFirstNameContaining(search.get(), pageable);
+        }else {
+            customerList = customerService.findAll(pageable);
+        }
         model.addAttribute("customerList", customerList);
+        model.addAttribute("search", search);
         return "/customer/list";
     }
 

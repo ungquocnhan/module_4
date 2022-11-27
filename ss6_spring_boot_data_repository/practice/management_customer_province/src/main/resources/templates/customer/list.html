@@ -7,16 +7,24 @@
 <body>
 <a href="/customer/create">Create new customer</a>
 <h1>Customers</h1>
+<form>
+    Search by first name:
+    <input name="search" type="text" th:value="${search}"/>
+    <input type="submit" value="Search"/>
+</form>
+<br>
 <table border="1">
     <tr>
+        <th>STT</th>
         <th>First name</th>
         <th>Last name</th>
         <th>Province</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
-    <th:block th:each="customer : ${customerList}">
+    <th:block th:each="customer, customerStat : ${customerList}">
         <tr>
+            <td th:text="${customerStat.count}"></td>
             <td th:text="${customer.firstName}"></td>
             <td th:text="${customer.lastName}"></td>
             <td th:if="${customer.province}" th:text="${customer.province.name}"></td>
@@ -26,6 +34,11 @@
         </tr>
     </th:block>
 </table>
-</body>
+<div>
+    <a th:href="@{'/customer'(page=${customerList.number - 1})}" th:if="${customerList.hasPrevious()}">Previous</a>
+    <span th:text="${customerList.number + 1}"></span>/<span th:text="${customerList.totalPages}"></span>
+    <a th:href="@{'/customer'(page=${customerList.number + 1})}" th:if="${customerList.hasNext()}">Next</a>
+
+</div>
 </body>
 </html>
