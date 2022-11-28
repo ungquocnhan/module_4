@@ -18,21 +18,20 @@
         </button>
         <form class="d-flex">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search"
-                   onfocus="this.value=''" th:value="${search}">
+                   th:value="${search}">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
     </div>
 </nav>
-<!--<p th:text="|Search Value : ${search}|"></p>-->
-<a href="/blog/create" class="btn btn-outline-success">Create new blog</a>
 <h1>Blog</h1>
 <p th:if="${message}">
-    <span th:text="${message}"></span>
+    <span style="color: green" th:text="${message}"></span>
 </p>
 <table class="table table-striped">
     <thead>
     <tr>
         <th>STT</th>
+        <th>Category</th>
         <th>Title</th>
         <th>Content</th>
         <th>Author</th>
@@ -43,13 +42,14 @@
     </thead>
     <tbody>
     <tr th:each="blog, blogStat : ${blogList}">
-        <td th:text="${blogStat.count}"></td>
+        <td th:text="${blogStat.count} + ${blogList.number} * ${blogList.size}"></td>
+        <td th:if="${blog.category}" th:text="${blog.category.name}"></td>
+        <td th:unless="${blog.category}"></td>
         <td th:text="${blog.title}"></td>
         <td th:text="${blog.content}"></td>
         <td th:text="${blog.author}"></td>
         <td th:text="${blog.dateStart}"></td>
         <td>
-            <!--            <a th:href="@{/blog/edit/__${blog.id}__ }" class="btn btn-secondary btn-sm">Edit</a>-->
             <a th:attr="onclick=|infoEdit('${blog.id}','${blog.title}','${blog.content}','${blog.author}','${blog.dateStart}')|"
                class="edit btn btn-sm btn-primary" data-bs-toggle="modal" href="#editBlog">
                 Edit
@@ -64,6 +64,12 @@
     </tr>
     </tbody>
 </table>
+
+<div>
+    <a th:href="@{'/blog'(page=${blogList.number - 1})}" th:if="${blogList.hasPrevious()}">Previous</a>
+    <span th:text="${blogList.number + 1}"></span>/<span th:text="${blogList.totalPages}"></span>
+    <a th:href="@{'/blog'(page=${blogList.number + 1})}" th:if="${blogList.hasNext()}">Next</a>
+</div>
 
 <!-- Modal Delete -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -98,6 +104,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="col-md-12">
+                        <label class="form-label">Category</label>
+                        <select th:field="*{category}">
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                        </select>
+                    </div>
                     <div class="col-md-12">
                         <label class="form-label">Title</label>
                         <input type="text" placeholder="Title" th:field="*{title}"/>
@@ -137,6 +149,12 @@
                 </div>
                 <div class="modal-body">
                     <input th:type="hidden" id="idEdit" th:field="*{id}">
+                    <div class="col-md-12">
+                        <label class="form-label">Category</label>
+                        <select th:field="*{category}">
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}" th:selected="(${blog.category}) and (${category.id} == *{category.id})"></option>
+                        </select>
+                    </div>
                     <div class="col-md-12">
                         <label class="form-label">Title</label>
                         <input type="text" id="titleEdit" th:field="*{title}"/>

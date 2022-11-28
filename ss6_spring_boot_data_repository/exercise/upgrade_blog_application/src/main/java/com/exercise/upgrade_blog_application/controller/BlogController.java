@@ -1,27 +1,40 @@
-package com.example.build_blog.controller;
+package com.exercise.upgrade_blog_application.controller;
 
-import com.example.build_blog.model.Blog;
-import com.example.build_blog.service.IBlogService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.exercise.upgrade_blog_application.model.Blog;
+import com.exercise.upgrade_blog_application.model.Category;
+import com.exercise.upgrade_blog_application.service.IBlogService;
+import com.exercise.upgrade_blog_application.service.ICategoryService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/blog")
 public class BlogController {
 
-    @Autowired
     private IBlogService blogService;
+    private ICategoryService categoryService;
+
+    public BlogController(IBlogService blogService, ICategoryService categoryService) {
+        this.blogService = blogService;
+        this.categoryService = categoryService;
+    }
+
+    @ModelAttribute("categories")
+    public List<Category> categories(){
+        return categoryService.findAllCategoryFlag();
+    }
 
     @RequestMapping("")
-    public String showListBlog(@RequestParam(defaultValue = "") String search, Model model) {
-        List<Blog> blogList = blogService.findByAuthorContainingOrContentContainingOrTitleContaining(search);
+    public String showListBlog(@RequestParam(defaultValue = "") String search, @PageableDefault(page = 0, size = 5, sort = {"date_start"}) Pageable pageable, Model model) {
+        Page<Blog> blogList = blogService.searchAuthorOrContentOrTitle(search, pageable);
         model.addAttribute("blogList", blogList);
         model.addAttribute("search", search);
         Blog blog = new Blog();
@@ -29,30 +42,13 @@ public class BlogController {
         return "/blog/list";
     }
 
-    @GetMapping("/create")
-    public String showCreateForm(Model model) {
-        Blog blog = new Blog();
-        model.addAttribute("blog", blog);
-        return "blog/create";
-    }
-
-    @PostMapping("/save")
+        @PostMapping("/save")
     public String save(@ModelAttribute("blog") Blog blog, RedirectAttributes redirectAttributes) {
         blogService.save(blog);
         redirectAttributes.addFlashAttribute("message", "Create success");
         return "redirect:/blog";
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable int id, Model model){
-        Optional<Blog> blog = blogService.findById(id);
-        if (blog.isPresent()) {
-            model.addAttribute("blog", blog.get());
-            return "/blog/edit";
-        } else {
-            return "/blog/error.404";
-        }
-    }
 
     @PostMapping("/update")
     public String update(@ModelAttribute("blog") Blog blog, RedirectAttributes redirectAttributes){
@@ -63,9 +59,10 @@ public class BlogController {
 
     @PostMapping("/delete")
     public String delete(@RequestParam("deleteId") int id, RedirectAttributes redirectAttributes){
-        blogService.remove(id);
+        blogService.updateFlag(id);
         redirectAttributes.addFlashAttribute("message", "Delete success");
         return "redirect:/blog";
     }
+
 
 }

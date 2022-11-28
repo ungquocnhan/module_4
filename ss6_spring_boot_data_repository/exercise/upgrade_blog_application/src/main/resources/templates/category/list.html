@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="/layout :: header">
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategory">
+            Add new Category
+        </button>
+    </div>
+</nav>
+<h1>Category</h1>
+<p th:if="${message}">
+    <span style="color: green" th:text="${message}"></span>
+</p>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category, varStat : ${categoryList}">
+        <td th:text="${varStat.count}"></td>
+        <td th:text="${category.name}"></td>
+        <td>
+            <a th:attr="onclick=|infoEdit('${category.id}','${category.name}')|"
+               class="edit btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editCategory">
+                Edit
+            </a>
+        </td>
+        <td>
+            <a th:attr="onclick=|infoDelete('${category.id}','${category.name}')|"
+               class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteCategory">
+                Delete
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/category/view-category/__${category.id}__}">View</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Modal Add -->
+<div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="row" th:action="@{/category/save-category}" th:object="${category}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryLabel">Add Blog</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <label class="form-label">Name</label>
+                        <input type="text" placeholder="Name" th:field="*{name}"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger btnAdd">Create Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteCategory" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form th:action="@{/category/delete-category}" th:method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input name="deleteId" hidden id="deleteId">
+                    <pre>Are you want to delete category ?</pre>
+                    <pre style="color: darkred" id="deleteName"></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="editCategory" tabindex="-1" aria-labelledby="editCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="row" th:action="@{/category/update-category}" th:object="${category}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCategoryLabel">Edit category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input th:type="hidden" id="idEdit" th:field="*{id}">
+                    <div class="col-md-12">
+                        <label class="form-label">Name</label>
+                        <input type="text" id="nameEdit" th:field="*{name}"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger btnAdd">Update category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function infoDelete(id, name){
+        document.getElementById("deleteId").value = id;
+        document.getElementById("deleteName").innerText = name;
+    }
+
+    function infoEdit(id, name){
+        document.getElementById("idEdit").value = id;
+        document.getElementById("nameEdit").value = name;
+    }
+</script>
+</html>
