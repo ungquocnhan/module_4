@@ -26,7 +26,14 @@
         </tr>
         <tr>
             <td>Category:</td>
-            <td><input type="text" th:field="*{category}"/></td>
+            <td>
+                <select th:field="*{category}">
+                <option value="Trữ tình">Trữ tình</option>
+                <option value="Nhạc trẻ">Nhạc trẻ</option>
+                <option value="Cách mạng">Cách mạng</option>
+                <option value="Rap việt">Rap việt</option>
+                </select>
+            </td>
             <td th:errors="*{category}" class="text-danger"></td>
         </tr>
         <tr>

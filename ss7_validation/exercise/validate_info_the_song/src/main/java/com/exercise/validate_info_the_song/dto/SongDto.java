@@ -14,9 +14,7 @@ public class SongDto {
     @Size(max = 800, message = "{size-800}")
     @Pattern(regexp = "[A-za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]*", message = "{name}")
     private String artist;
-    @NotEmpty(message = "{NotEmpty}")
-    @Size(max = 1000, message = "{size-1000}")
-    @Pattern(regexp = "[A-za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]*", message = "{name}")
+    @Pattern(regexp = "(Trữ tình)|(Nhạc trẻ)|(Cách mạng)|(Rap việt)", message = "{name}")
     private String category;
 
     public SongDto() {
