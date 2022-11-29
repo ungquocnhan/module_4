@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<h1>User Register</h1>
+<form th:object="${user}" th:action="@{/validate-user}" method="post">
+    <table>
+        <tr>
+            <td>First name:</td>
+            <td><input th:field="*{firstName}"></td>
+            <td th:errors="*{firstName}" class="text-danger"></td>
+        </tr>
+        <tr>
+            <td>Last name:</td>
+            <td><input th:field="*{lastName}"></td>
+            <td th:errors="*{lastName}" class="text-danger"></td>
+        </tr>
+        <tr>
+            <td>Phone number:</td>
+            <td><input th:field="*{phoneNumber}"></td>
+            <td th:errors="*{phoneNumber}" class="text-danger"></td>
+        </tr>
+        <tr>
+            <td>Age:</td>
+            <td><input th:field="*{age}"></td>
+            <td th:errors="*{age}" class="text-danger"></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input th:field="*{email}"></td>
+            <td th:errors="*{email}" class="text-danger"></td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
