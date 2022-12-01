@@ -46,14 +46,14 @@ public class BookController {
 
 
     @PostMapping("/rent")
-    public String rent(@ModelAttribute("book") Book book, RedirectAttributes redirectAttributes) {
-        if (book.getAmount() > 0) {
-            int idRent = orderService.getIdRent(book);
-            bookService.rentBook(book.getId());
-            redirectAttributes.addFlashAttribute("message", "Rent book success - ID Rent book :" + idRent);
-            return "redirect:/book";
+    public String rent(@ModelAttribute("book") Book book, RedirectAttributes redirectAttributes) throws Exception {
+        if (book.getAmount() == 0) {
+            throw new Exception();
         }
-        return "/error";
+        int idRent = orderService.getIdRent(book);
+        bookService.rentBook(book.getId());
+        redirectAttributes.addFlashAttribute("message", "Rent book success - ID Rent book :" + idRent);
+        return "redirect:/book";
     }
 
 
@@ -67,15 +67,15 @@ public class BookController {
     }
 
     @PostMapping("/pay")
-    public String payBook(@ModelAttribute("payBook") Order order, RedirectAttributes redirectAttributes) {
+    public String payBook(@ModelAttribute("payBook") Order order, RedirectAttributes redirectAttributes) throws Exception {
         Order oderPay = orderService.findByIdRent(order.getIdRent());
-        if (oderPay != null) {
-            Optional<Book> book = bookService.findById(oderPay.getBook().getId());
-            bookService.payBook(book.get().getId());
-            orderService.deleteOrder(oderPay);
-            redirectAttributes.addFlashAttribute("message", "Pay book success");
-            return "redirect:/book";
+        if (oderPay == null) {
+            throw new Exception();
         }
-        return "/error";
+        Optional<Book> book = bookService.findById(oderPay.getBook().getId());
+        bookService.payBook(book.get().getId());
+        orderService.deleteOrder(oderPay);
+        redirectAttributes.addFlashAttribute("message", "Pay book success");
+        return "redirect:/book";
     }
 }
