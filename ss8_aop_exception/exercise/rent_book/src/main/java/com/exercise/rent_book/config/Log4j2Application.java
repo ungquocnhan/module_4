@@ -5,7 +5,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public class Log4j2Application implements ApplicationRunner {
     private static final Logger logger = LogManager.getLogger(Log4j2Application.class);
 
