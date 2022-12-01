@@ -16,22 +16,8 @@ public class HibernateCustomerService implements ICustomerService {
     public static SessionFactory sessionFactory;
     public static EntityManager entityManager;
 
-//    static {
-//        System.out.println("hellofdsfdsfdssssssssssssssssssssssssssssssss");
-//        try {
-//            sessionFactory = new Configuration()
-//                    .configure("hibernate.conf.xml")
-//                    .buildSessionFactory();
-//            entityManager = sessionFactory.createEntityManager();
-//        } catch (HibernateException e) {
-//            e.printStackTrace();
-//        }
-//    }
     @Override
     public List<Customer> findAll() {
-//        String queryStr = "SELECT c FROM Customer AS c";
-//        TypedQuery<Customer> query = ConnectionUtil.entityManager.createQuery(queryStr, Customer.class);
-//        return query.getResultList();
         return null;
     }
 }

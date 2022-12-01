@@ -1,6 +1,7 @@
 package com.exercise.upgrade_blog_application.service.impl;
 
 import com.exercise.upgrade_blog_application.model.Blog;
+import com.exercise.upgrade_blog_application.model.Category;
 import com.exercise.upgrade_blog_application.repository.IBlogRepository;
 import com.exercise.upgrade_blog_application.service.IBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,10 @@ public class BlogService implements IBlogService {
     @Override
     public void updateFlag(int id) {
         blogRepository.updateFlag(id);
+    }
+
+    @Override
+    public Iterable<Blog> findAllByCategory(Category category) {
+        return blogRepository.findAllByCategory(category);
     }
 }

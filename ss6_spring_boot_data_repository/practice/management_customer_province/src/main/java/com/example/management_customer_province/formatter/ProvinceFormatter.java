@@ -19,7 +19,12 @@ public class ProvinceFormatter implements Formatter<Province> {
 
     @Override
     public Province parse(String text, Locale locale) throws ParseException {
-        Optional<Province> provinceOptional = provinceService.findById(Integer.parseInt(text));
+        Optional<Province> provinceOptional = Optional.empty();
+        try {
+            provinceOptional = provinceService.findById(Integer.parseInt(text));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return provinceOptional.orElse(null);
     }
 

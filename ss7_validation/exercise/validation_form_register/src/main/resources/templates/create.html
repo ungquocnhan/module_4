@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>User Register</h1>
-<form th:object="${user}" th:action="@{/validate-user}" method="post">
+<form th:object="${userDto}" th:action="@{/save}" method="post">
     <table>
         <tr>
             <td>First name:</td>

@@ -1,6 +1,8 @@
 package com.exercise.upgrade_blog_application.controller;
 
+import com.exercise.upgrade_blog_application.model.Blog;
 import com.exercise.upgrade_blog_application.model.Category;
+import com.exercise.upgrade_blog_application.service.IBlogService;
 import com.exercise.upgrade_blog_application.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +18,10 @@ import java.util.Optional;
 public class CategoryController {
     @Autowired
     private ICategoryService categoryService;
+    private IBlogService blogService;
 
     @RequestMapping("")
-    public String showListCategory(Model model){
+    public String showListCategory(Model model) {
         List<Category> categoryList = categoryService.findAllCategoryFlag();
         model.addAttribute("categoryList", categoryList);
         Category category = new Category();
@@ -26,26 +29,38 @@ public class CategoryController {
         return "/category/list";
     }
 
-    @PostMapping("/save-category")
-    public String saveCategory(@ModelAttribute("category") Category category, RedirectAttributes redirectAttributes){
+    @PostMapping("/save")
+    public String saveCategory(@ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
         categoryService.save(category);
         redirectAttributes.addFlashAttribute("message", "Add success");
         return "redirect:/category";
     }
 
-    @PostMapping("/delete-category")
-    public String deleteCategory(@RequestParam("deleteId") int id, RedirectAttributes redirectAttributes){
+    @PostMapping("/delete")
+    public String deleteCategory(@RequestParam("deleteId") int id, RedirectAttributes redirectAttributes) {
         categoryService.updateFlag(id);
         redirectAttributes.addFlashAttribute("message", "Delete success");
         return "redirect:/category";
     }
 
 
-    @PostMapping("/update-category")
-    public String updateCategory(@ModelAttribute("category") Category category, RedirectAttributes redirectAttributes){
+    @PostMapping("/update")
+    public String updateCategory(@ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
         categoryService.save(category);
         redirectAttributes.addFlashAttribute("message", "Edit success");
         return "redirect:/category";
     }
 
+    @GetMapping("/view/{id}")
+    public String viewCategory(@PathVariable("id") int id, Model model) {
+        Optional<Category> category = categoryService.findById(id);
+        if (!category.isPresent()) {
+            return "error-404";
+        }
+
+        Iterable<Blog> blogs = blogService.findAllByCategory(category.get());
+        model.addAttribute("category", category.get());
+        model.addAttribute("blogs", blogs);
+        return "/category/view";
+    }
 }

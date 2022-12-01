@@ -3,6 +3,7 @@ package com.exercise.validation_form_register.dto;
 import javax.validation.constraints.*;
 
 public class UserDto {
+    private int id;
     @NotEmpty(message = "{NotEmpty}")
     @Size(min = 3, max = 45, message = "{Size}")
     private String firstName;
@@ -14,12 +15,12 @@ public class UserDto {
     @NotEmpty(message = "{NotEmpty}")
     @Pattern(regexp = "(090|093)[0-9]{7}", message = "{Phone}")
     private String phoneNumber;
-
+    
     @Min(value = 18, message = "{Age}")
     private int age;
 
     @NotEmpty(message = "{NotEmpty}")
-    @Pattern(regexp = "[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)",message = "{Email}")
+    @Pattern(regexp = "[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)", message = "{Email}")
     private String email;
 
     public UserDto() {

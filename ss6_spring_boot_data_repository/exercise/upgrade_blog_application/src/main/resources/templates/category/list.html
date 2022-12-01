@@ -41,7 +41,7 @@
             </a>
         </td>
         <td>
-            <a th:href="@{/category/view-category/__${category.id}__}">View</a>
+            <a th:href="@{/category/view/__${category.id}__}">View</a>
         </td>
     </tr>
     </tbody>
@@ -51,7 +51,7 @@
 <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="addCategoryLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="row" th:action="@{/category/save-category}" th:object="${category}" method="post">
+            <form class="row" th:action="@{/category/save}" th:object="${category}" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addCategoryLabel">Add Blog</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -74,7 +74,7 @@
 <!-- Modal Delete -->
 <div class="modal fade" id="deleteCategory" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form th:action="@{/category/delete-category}" th:method="post">
+        <form th:action="@{/category/delete}" th:method="post">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModalLabel">Delete Category</h5>
@@ -98,7 +98,7 @@
 <div class="modal fade" id="editCategory" tabindex="-1" aria-labelledby="editCategoryLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="row" th:action="@{/category/update-category}" th:object="${category}" method="post">
+            <form class="row" th:action="@{/category/update}" th:object="${category}" method="post">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editCategoryLabel">Edit category</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

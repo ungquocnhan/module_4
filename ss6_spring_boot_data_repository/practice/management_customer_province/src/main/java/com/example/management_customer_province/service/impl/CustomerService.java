@@ -26,8 +26,12 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Optional<Customer> findById(Integer id) {
-        return customerRepository.findById(id);
+    public Optional<Customer> findById(Integer id) throws Exception {
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        if(!customerOptional.isPresent()){
+            throw new Exception("customer not found!");
+        }
+        return customerOptional;
     }
 
     @Override

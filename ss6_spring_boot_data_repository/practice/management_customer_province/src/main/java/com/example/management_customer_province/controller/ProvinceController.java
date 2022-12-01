@@ -50,7 +50,12 @@ public class ProvinceController {
 
     @GetMapping("/edit-province/{id}")
         public String showEditForm(@PathVariable("id") int id, Model model){
-        Optional<Province> province = provinceService.findById(id);
+        Optional<Province> province = Optional.empty();
+        try {
+            province = provinceService.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if(province.isPresent()){
             model.addAttribute("province", province.get());
             return "/province/edit";
@@ -68,7 +73,12 @@ public class ProvinceController {
 
     @GetMapping("/delete-province/{id}")
     public String showDelete(@PathVariable("id") int id, Model model){
-        Optional<Province> province = provinceService.findById(id);
+        Optional<Province> province = Optional.empty();
+        try {
+            province = provinceService.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if(province.isPresent()){
             model.addAttribute("province", province);
             return "/province/delete";
@@ -86,7 +96,12 @@ public class ProvinceController {
 
     @GetMapping("/view-province/{id}")
     public String viewProvince(@PathVariable("id") int id, Model model){
-        Optional<Province> province = provinceService.findById(id);
+        Optional<Province> province = Optional.empty();
+        try {
+            province = provinceService.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if(!province.isPresent()){
             return "/error-404";
         }

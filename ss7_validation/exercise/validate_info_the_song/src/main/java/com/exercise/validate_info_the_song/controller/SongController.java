@@ -51,8 +51,10 @@ public class SongController {
     @GetMapping("/edit/{id}")
     public String showFormEdit(@PathVariable("id") int id, Model model){
         Optional<Song> song = songService.findById(id);
+        SongDto songDto = new SongDto();
         if(song.isPresent()){
-            model.addAttribute("songDto", song.get());
+            BeanUtils.copyProperties(song.get(), songDto);
+            model.addAttribute("songDto", songDto);
             return "/song/edit";
         }else {
             return "/error-404";
@@ -70,6 +72,13 @@ public class SongController {
             redirectAttributes.addFlashAttribute("message", "Edit success");
             return "redirect:/song";
         }
+    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam("deleteId") int id, RedirectAttributes redirectAttributes){
+        songService.remove(id);
+        redirectAttributes.addFlashAttribute("message", "Delete success");
+        return "redirect:/song";
     }
 
 }

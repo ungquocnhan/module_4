@@ -5,7 +5,7 @@ import java.util.Optional;
 public interface IGeneralService<T> {
     Iterable<T> findAll();
 
-    Optional<T> findById(Integer id);
+    Optional<T> findById(Integer id) throws Exception;
 
     void save(T t);
 

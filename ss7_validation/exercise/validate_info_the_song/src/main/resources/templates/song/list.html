@@ -33,6 +33,8 @@
         <th scope="col">Nghệ sĩ thể hiện</th>
         <th scope="col">Thể Loại</th>
         <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+
     </tr>
     </thead>
     <tbody>
@@ -44,9 +46,43 @@
         <td>
             <a th:href="@{/song/edit/__${song.id}__}">Edit</a>
         </td>
+        <td>
+            <a th:attr="onclick=|infoDelete('${song.id}','${song.name}')|"
+               class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                Delete
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>
-</body>
 
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form th:action="@{/song/delete}" th:method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete blog</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input name="deleteId" hidden id="deleteId">
+                    <pre>Are you want to delete song ?</pre>
+                    <pre style="color: darkred" id="deleteName"></pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    function infoDelete(id, name) {
+        document.getElementById("deleteId").value = id;
+        document.getElementById("deleteName").innerText = name;
+    }
+</script>
 </html>

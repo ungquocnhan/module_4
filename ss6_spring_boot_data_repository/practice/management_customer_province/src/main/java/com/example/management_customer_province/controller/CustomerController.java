@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class CustomerController {
     private final ICustomerService customerService;
     private final IProvinceService provinceService;
+
     @Autowired
     public CustomerController(ICustomerService customerService, IProvinceService provinceService) {
         this.customerService = customerService;
@@ -26,7 +28,7 @@ public class CustomerController {
     }
 
     @ModelAttribute("provinces")
-    public Iterable<Province> provinces(){
+    public Iterable<Province> provinces() {
         return provinceService.findAll();
     }
 
@@ -35,14 +37,30 @@ public class CustomerController {
 //        Iterable<Customer> customerList = customerService.findAll();
 //        Page<Customer> customerList = customerService.findAll(pageable);
         Page<Customer> customerList;
-        if(search.isPresent()){
+        if (search.isPresent()) {
             customerList = customerService.findAllByFirstNameContaining(search.get(), pageable);
-        }else {
+        } else {
             customerList = customerService.findAll(pageable);
         }
         model.addAttribute("customerList", customerList);
         model.addAttribute("search", search);
         return "/customer/list";
+    }
+
+    @GetMapping("/{id}")
+    public String showInformation(@PathVariable int id, Model model) {
+        Optional<Customer> customerOptional = Optional.empty();
+        try {
+            customerOptional = customerService.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (customerOptional.isPresent()) {
+            model.addAttribute("customer", customerOptional.get());
+            return "customer/info";
+        } else {
+            return "redirect:/customer";
+        }
     }
 
     @GetMapping("/create")
@@ -61,7 +79,12 @@ public class CustomerController {
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") int id, Model model) {
-        Optional<Customer> customer = customerService.findById(id);
+        Optional<Customer> customer = Optional.empty();
+        try {
+            customer = customerService.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (customer.isPresent()) {
             model.addAttribute("customer", customer.get());
             return "/customer/edit";
@@ -79,7 +102,12 @@ public class CustomerController {
 
     @GetMapping("/delete/{id}")
     public String showDeleteForm(@PathVariable("id") int id, Model model) {
-        Optional<Customer> customer = customerService.findById(id);
+        Optional<Customer> customer = Optional.empty();
+        try {
+            customer = customerService.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (customer.isPresent()) {
             model.addAttribute("customer", customer.get());
             return "/customer/delete";
@@ -89,7 +117,7 @@ public class CustomerController {
     }
 
     @PostMapping("/delete")
-    public String delete(@ModelAttribute("customer") Customer customer, RedirectAttributes redirectAttributes){
+    public String delete(@ModelAttribute("customer") Customer customer, RedirectAttributes redirectAttributes) {
         customerService.remove(customer.getId());
         redirectAttributes.addFlashAttribute("message", "Delete success");
         return "redirect:/customer";
