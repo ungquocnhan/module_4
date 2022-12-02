@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 @Component
 @Aspect
 public class Logger {
+
+    static private int number = 0;
+
     @Pointcut(value = "execution(* com.exercise.rent_book.controller.BookController.*(..))")
     public void callMethod() {
     }
@@ -19,7 +22,7 @@ public class Logger {
     }
 
     @AfterThrowing(value = "execution(* com.exercise.rent_book.controller.BookController.*(..))")
-    public void checkEx(){
+    public void checkEx() {
         System.out.println("Gặp lỗi");
     }
 
@@ -28,7 +31,7 @@ public class Logger {
     }
 
     @After("rentMethod()")
-    public void afterRentMethod(JoinPoint joinPoint){
+    public void afterRentMethod(JoinPoint joinPoint) {
         System.out.println("Done " + joinPoint.getSignature().getName() + " vào thời gian: " + LocalDateTime.now());
     }
 
@@ -37,7 +40,16 @@ public class Logger {
     }
 
     @After("payMethod()")
-    public void afterPayMethod(JoinPoint joinPoint){
+    public void afterPayMethod(JoinPoint joinPoint) {
         System.out.println("Done " + joinPoint.getSignature().getName() + " vào thời gian: " + LocalDateTime.now());
+    }
+
+    @Pointcut(value = "execution(* com.exercise.rent_book.controller.BookController.*(..))")
+    public void countMethod() {
+    }
+
+    @AfterReturning("countMethod()")
+    public void afterReturningMethod(JoinPoint joinPoint) {
+        System.out.println("Count " + ++number +" vào thời gian: " + LocalDateTime.now());
     }
 }
