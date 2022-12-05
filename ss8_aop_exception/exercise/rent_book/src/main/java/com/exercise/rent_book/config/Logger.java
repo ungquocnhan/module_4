@@ -9,20 +9,16 @@ import java.time.LocalDateTime;
 @Component
 @Aspect
 public class Logger {
+    public static final String GHI_LOG = "F:/CODEGYM/module_4/ss8_aop_exception/exercise/rent_book/src/main/java/com/exercise/rent_book/config/ghi_log_count.txt";
+    public static final String GHI_LOG_RENT = "F:/CODEGYM/module_4/ss8_aop_exception/exercise/rent_book/src/main/java/com/exercise/rent_book/config/ghi_log_rent.txt";
+    public static final String GHI_LOG_PAY = "F:/CODEGYM/module_4/ss8_aop_exception/exercise/rent_book/src/main/java/com/exercise/rent_book/config/ghi_log_pay.txt";
+    public static final String GHI_LOG_EX = "F:/CODEGYM/module_4/ss8_aop_exception/exercise/rent_book/src/main/java/com/exercise/rent_book/config/ghi_log_exception.txt";
 
     static private int number = 0;
 
-    @Pointcut(value = "execution(* com.exercise.rent_book.controller.BookController.*(..))")
-    public void callMethod() {
-    }
-
-    @Before("callMethod()")
-    public void beforeMethod(JoinPoint joinPoint) {
-        System.out.println("Đang vào method " + joinPoint.getSignature().getName() + " vào thời gian: " + LocalDateTime.now());
-    }
-
     @AfterThrowing(value = "execution(* com.exercise.rent_book.controller.BookController.*(..))")
     public void checkEx() {
+        WriteFile.writeFileException("Gặp lỗi");
         System.out.println("Gặp lỗi");
     }
 
@@ -30,8 +26,9 @@ public class Logger {
     public void rentMethod() {
     }
 
-    @After("rentMethod()")
+    @AfterReturning("rentMethod()")
     public void afterRentMethod(JoinPoint joinPoint) {
+        WriteFile.writeFileRent("Mượn sách thành công " + "vào thời gian: " + LocalDateTime.now());
         System.out.println("Done " + joinPoint.getSignature().getName() + " vào thời gian: " + LocalDateTime.now());
     }
 
@@ -39,8 +36,10 @@ public class Logger {
     public void payMethod() {
     }
 
-    @After("payMethod()")
+    @AfterReturning("payMethod()")
     public void afterPayMethod(JoinPoint joinPoint) {
+//        WriteFile.writeFilePay("Trả sách thành công " + joinPoint.getSignature().getName() + " vào thời gian: " + LocalDateTime.now());
+        WriteFile.writeFilePay("Trả sách thành công " + "vào thời gian: " + LocalDateTime.now());
         System.out.println("Done " + joinPoint.getSignature().getName() + " vào thời gian: " + LocalDateTime.now());
     }
 
@@ -50,6 +49,7 @@ public class Logger {
 
     @AfterReturning("countMethod()")
     public void afterReturningMethod(JoinPoint joinPoint) {
-        System.out.println("Count " + ++number +" vào thời gian: " + LocalDateTime.now());
+        WriteFile.writeFileCount("Số lần truy cập " + ++number +" vào thời gian: " + LocalDateTime.now());
+//        System.out.println("Count " + number++ +" vào thời gian: " + LocalDateTime.now());
     }
 }

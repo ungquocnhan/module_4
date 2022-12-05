@@ -48,7 +48,7 @@ public class CartDto {
     public void subProduct(ProductDto productDto) {
         if (checkItemInCart(productDto)) {
             Map.Entry<ProductDto, Integer> itemEntry = selectItemInCart(productDto);
-            if (itemEntry.getValue() > 1) {
+            if (itemEntry.getValue() > 0) {
                 Integer newQuantity = itemEntry.getValue() - 1;
                 productMap.replace(itemEntry.getKey(), newQuantity);
             } else {

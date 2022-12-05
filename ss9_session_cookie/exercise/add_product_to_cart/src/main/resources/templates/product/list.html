@@ -33,7 +33,8 @@
                 <tr th:each="product, stat : ${productList}">
                     <td th:text="${stat.count}"></td>
                     <td th:text="${product.name}"></td>
-                    <td th:text="${product.price}"></td>
+<!--                    <td th:text="${product.price}"></td>-->
+                    <td th:text="${#numbers.formatDecimal(product.price,8,0)}"></td>
                     <td th:text="${product.description}"></td>
                     <td>
                         <div style="width: 150px">
