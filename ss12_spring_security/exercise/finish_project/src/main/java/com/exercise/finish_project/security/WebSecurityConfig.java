@@ -1,6 +1,6 @@
 package com.exercise.finish_project.security;
 
-import com.exercise.finish_project.service.UserDetailsServiceImpl;
+import com.exercise.finish_project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private UserService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

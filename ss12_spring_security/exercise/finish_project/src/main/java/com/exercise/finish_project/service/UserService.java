@@ -16,9 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserService implements UserDetailsService {
     @Autowired
     private IUserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser user = this.userRepository.findByUsername(username);
