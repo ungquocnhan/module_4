@@ -1,12 +1,15 @@
 package com.case_study.case_study_module_4.model.customer;
 
 import com.case_study.case_study_module_4.model.contract.Contract;
-import com.case_study.case_study_module_4.model.user.User;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+
+@SQLDelete(sql = "UPDATE customer set flag = false where id = ?")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +20,11 @@ public class Customer {
     private String birthday;
     @Column(columnDefinition = "bit")
     private boolean gender;
-    @Column(unique = true, columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)")
     private String idCard;
-    @Column(unique = true, columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)")
     private String phoneNumber;
-    @Column(unique = true, columnDefinition = "varchar(45)")
+    @Column(columnDefinition = "varchar(45)")
     private String email;
     @Column(columnDefinition = "varchar(45)")
     private String address;

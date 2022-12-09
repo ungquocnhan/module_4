@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="/home :: head">
+</head>
+<body>
+<div id="main" class="vh-100">
+    <div th:insert="/home :: header">
+    </div>
+    <nav class="navbar bg-light">
+        <div class="container-fluid">
+            <a href="/customer/create" class="btn bg-secondary btn-sm">Add New Customer</a>
+            <h1>Customer Management</h1>
+            <form class="d-flex">
+                <input class="form-control-sm me-2" type="search" name="name" placeholder="Name" th:value="${name}">
+                <input class="form-control-sm me-2" type="search" name="email" placeholder="Email" th:value="${email}">
+                <div class="form-control-sm me-2">
+                    <select value="" type="search" name="customerType"><label class="form-label">Customer type</label>
+                        <option th:each="customerType : ${customerTypeList}" th:value="${customerType.name}"
+                                th:text="${customerType.name}"></option>
+                    </select>
+                </div>
+                <button class="btn btn-primary btn-sm" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <center>
+        <h2 th:if="${message != null}">
+            <span style="color: green" th:text="${message}"></span>
+        </h2>
+    </center>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Name</th>
+            <th scope="col">Birthday</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Id Card</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Email</th>
+            <th scope="col">Customer Type</th>
+            <th scope="col">Address</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer, customerStatus : ${customerViewPage}">
+            <td th:text="${customerStatus.count + customerViewPage.number * customerViewPage.size}"></td>
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.birthday}"></td>
+            <td th:text="${customer.gender} ? 'Male' : 'Female'"></td>
+            <td th:text="${customer.idCard}"></td>
+            <td th:text="${customer.phoneNumber}"></td>
+            <td th:text="${customer.email}"></td>
+            <td th:text="${customer.getTypeName()}"></td>
+            <td th:text="${customer.address}"></td>
+            <td>
+                <a th:href="@{/customer/edit/__${customer.getId()}__}" class="btn btn-secondary btn-sm">Edit</a>
+            </td>
+            <td>
+                <button type="button" th:attr="onclick=|infoDelete('${customer.id}','${customer.name}');|"
+                   class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    Delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${customerViewPage.totalPages > 1}">
+        <div class="row col-sm-10 justify-content-end">
+            <div class="col-sm-2">
+                Total rows: [[${customerViewPage.totalElements}]]
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-sm btn-light" th:href="@{'/customer'(page=${customerViewPage.number - 1})}"
+                   th:if="${customerViewPage.hasPrevious()}">Previous</a>
+            </div>
+            <div class="col-sm-1">
+                <span th:each="i : ${#numbers.sequence(1, customerViewPage.totalPages)}">
+                    <a class="text-danger" th:if="${(customerViewPage.number + 1) != i}"  th:href="@{'/customer'(page=${i - 1})}">[[${i}]]</a>
+                <span th:unless="${(customerViewPage.number + 1) != i}">[[${i}]]</span>
+                </span>
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-sm btn-light" th:href="@{'/customer'(page=${customerViewPage.number + 1})}"
+                   th:if="${customerViewPage.hasNext()}">Next</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Delete -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form th:action="@{/customer/delete}" th:method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Delete blog</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input name="deleteId" hidden id="deleteId">
+                        <pre>Are you want to delete customer ?</pre>
+                        <pre style="color: darkred" id="deleteName"></pre>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+      <div th:insert="/home :: footer">
+    </div>
+</div>
+</body>
+<script>
+    function infoDelete(id, name){
+        document.getElementById("deleteId").value = id;
+        document.getElementById("deleteName").innerText = name;
+    }
+</script>
+</html>
