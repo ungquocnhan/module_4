@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
 @RequestMapping("/facility")
 public class FacilityController {
     private final IFacilityService facilityService;
-    private IFacilityTypeService facilityTypeService;
+    private final IFacilityTypeService facilityTypeService;
 
     @Autowired
     public FacilityController(IFacilityService facilityService, IFacilityTypeService facilityTypeService) {
@@ -38,6 +39,10 @@ public class FacilityController {
     public String showListFacility(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "") String facilityType, @PageableDefault(size = 5)Pageable pageable, Model model){
         Page<FacilityView> facilityViewPage = facilityService.findAllFacilityView(name, facilityType, pageable);
         model.addAttribute("facilityViewPage", facilityViewPage);
-        return "/facility/list";
+        model.addAttribute("name", name);
+        model.addAttribute("facilityType", facilityType);
+
+        return "facility/list";
     }
+
 }

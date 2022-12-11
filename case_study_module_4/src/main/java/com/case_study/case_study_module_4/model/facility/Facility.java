@@ -16,15 +16,20 @@ public class Facility {
     private int id;
     @Column(columnDefinition = "varchar(45)")
     private String name;
-    private int area;
-    private double cost;
-    private int maxPeople;
+    @Column(columnDefinition = "int")
+    private Integer area;
+    @Column(columnDefinition = "double")
+    private Double cost;
+    @Column(columnDefinition = "int")
+    private Integer maxPeople;
     @Column(columnDefinition = "varchar(45)")
     private String standardRoom;
     @Column(columnDefinition = "varchar(45)")
     private String descriptionOtherConvenience;
-    private double poolArea;
-    private int numberOfFloor;
+    @Column(columnDefinition = "double")
+    private Double poolArea;
+    @Column(columnDefinition = "int")
+    private Integer numberOfFloor;
     @Column(columnDefinition = "text")
     private String facilityFree;
     @ManyToOne
@@ -55,27 +60,27 @@ public class Facility {
         this.name = name;
     }
 
-    public int getArea() {
+    public Integer getArea() {
         return area;
     }
 
-    public void setArea(int area) {
+    public void setArea(Integer area) {
         this.area = area;
     }
 
-    public double getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
-    public int getMaxPeople() {
+    public Integer getMaxPeople() {
         return maxPeople;
     }
 
-    public void setMaxPeople(int maxPeople) {
+    public void setMaxPeople(Integer maxPeople) {
         this.maxPeople = maxPeople;
     }
 
@@ -95,19 +100,19 @@ public class Facility {
         this.descriptionOtherConvenience = descriptionOtherConvenience;
     }
 
-    public double getPoolArea() {
+    public Double getPoolArea() {
         return poolArea;
     }
 
-    public void setPoolArea(double poolArea) {
+    public void setPoolArea(Double poolArea) {
         this.poolArea = poolArea;
     }
 
-    public int getNumberOfFloor() {
+    public Integer getNumberOfFloor() {
         return numberOfFloor;
     }
 
-    public void setNumberOfFloor(int numberOfFloor) {
+    public void setNumberOfFloor(Integer numberOfFloor) {
         this.numberOfFloor = numberOfFloor;
     }
 

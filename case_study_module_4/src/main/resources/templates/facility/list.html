@@ -6,6 +6,29 @@
 <div id="main" class="vh-100">
     <div th:insert="/home :: header">
     </div>
+    <nav class="navbar bg-light">
+        <div class="container-fluid">
+            <a href="/facility/create" class="btn bg-secondary btn-sm">Add New Facility</a>
+            <h1>Facility Management</h1>
+            <form class="d-flex">
+                <input class="form-control-sm me-2" type="search" name="name" placeholder="Name" th:value="${name}">
+                <div class="form-control-sm me-2">
+                    <select value="" type="search" name="facilityType">
+                        <option value="">Facility type</option>
+                        <option th:each="facilityType : ${facilityTypeList}" th:value="${facilityType.name}"
+                                th:text="${facilityType.name}"></option>
+                    </select>
+                </div>
+                <button class="btn btn-primary btn-sm" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <center>
+        <h2 th:if="${message != null}">
+            <span style="color: green" th:text="${message}"></span>
+        </h2>
+    </center>
 
     <table class="table table-striped">
         <thead>
@@ -27,24 +50,24 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="facility, facilityStatus : ${facilityViewPage}">
+        <tr th:each="facilityView, facilityStatus : ${facilityViewPage}">
             <td th:text="${facilityStatus.count + facilityViewPage.number * facilityViewPage.size}"></td>
-            <td th:text="${facility.name}"></td>
-            <td th:text="${facility.area}"></td>
-            <td th:text="${facility.cost}"></td>
-            <td th:text="${facility.maxPeople}"></td>
-            <td th:text="${facility.standardRoom}"></td>
-            <td th:text="${facility.descriptionOtherConvenience}"></td>
-            <td th:text="${facility.facilityFree} != null ? ${facility.facilityFree} : ''"></td>
-            <td th:text="${facility.poolArea}"></td>
-            <td th:text="${facility.numberOfFloor}"></td>
-            <td th:text="${facility.rentTypeName}"></td>
-            <td th:text="${facility.facilityTypeName}"></td>
+            <td th:text="${facilityView.name}"></td>
+            <td th:text="${facilityView.area}"></td>
+            <td th:text="${facilityView.cost}"></td>
+            <td th:text="${facilityView.maxPeople}"></td>
+            <td th:text="${facilityView.standardRoom}"></td>
+            <td th:text="${facilityView.descriptionOtherConvenience}"></td>
+            <td th:text="${facilityView.facilityFree == null} ? ' ' : ${facilityView.facilityFree}"></td>
+            <td th:text="${facilityView.poolArea}"></td>
+            <td th:text="${facilityView.numberOfFloor}"></td>
+            <td th:text="${facilityView.rentTypeName}"></td>
+            <td th:text="${facilityView.facilityTypeName}"></td>
             <td>
-                <a th:href="@{/facility/edit/__${facility.getId()}__}" class="btn btn-secondary btn-sm">Edit</a>
+                <a th:href="@{/facility/edit/__${facilityView.getId()}__}" class="btn btn-secondary btn-sm">Edit</a>
             </td>
             <td>
-                <button type="button" th:attr="onclick=|infoDelete('${facility.id}','${facility.name}');|"
+                <button type="button" th:attr="onclick=|infoDelete('${facilityView.id}','${facilityView.name}');|"
                         class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
                     Delete
                 </button>
@@ -52,6 +75,28 @@
         </tr>
         </tbody>
     </table>
+
+    <div th:if="${facilityViewPage.totalPages > 1}">
+        <div class="row col-sm-10 justify-content-end">
+            <div class="col-sm-2">
+                Total rows: [[${facilityViewPage.totalElements}]]
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-sm btn-light" th:href="@{'/facility'(page=${facilityViewPage.number - 1})}"
+                   th:if="${facilityViewPage.hasPrevious()}">Previous</a>
+            </div>
+            <div class="col-sm-1">
+                <span th:each="i : ${#numbers.sequence(1, facilityViewPage.totalPages)}">
+                    <a class="text-danger" th:if="${(facilityViewPage.number + 1) != i}"  th:href="@{'/facility'(page=${i - 1})}">[[${i}]]</a>
+                <span th:unless="${(facilityViewPage.number + 1) != i}">[[${i}]]</span>
+                </span>
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-sm btn-light" th:href="@{'/facility'(page=${facilityViewPage.number + 1})}"
+                   th:if="${facilityViewPage.hasNext()}">Next</a>
+            </div>
+        </div>
+    </div>
 
     <div th:insert="/home :: footer">
     </div>

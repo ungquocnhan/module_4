@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -43,6 +44,8 @@ public class CustomerController {
     public String showList(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "") String email, @RequestParam(defaultValue = "") String customerType, @PageableDefault(size = 5) Pageable pageable, Model model) {
         Page<CustomerView> customerViewPage = customerService.findAllCustomerView(name, email, customerType, pageable);
         model.addAttribute("customerViewPage", customerViewPage);
+        model.addAttribute("name", name);
+        model.addAttribute("email", email);
         return "customer/list";
     }
 
@@ -97,5 +100,10 @@ public class CustomerController {
         customerService.remove(id);
         redirectAttributes.addFlashAttribute("message", "Success");
         return "redirect:/customer";
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView showInputNotAcceptable() {
+        return new ModelAndView("customer/inputs-not-acceptable");
     }
 }

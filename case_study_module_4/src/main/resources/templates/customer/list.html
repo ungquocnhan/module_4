@@ -14,7 +14,8 @@
                 <input class="form-control-sm me-2" type="search" name="name" placeholder="Name" th:value="${name}">
                 <input class="form-control-sm me-2" type="search" name="email" placeholder="Email" th:value="${email}">
                 <div class="form-control-sm me-2">
-                    <select value="" type="search" name="customerType"><label class="form-label">Customer type</label>
+                    <select value="" type="search" name="customerType">
+                        <option value="">Customer type</option>
                         <option th:each="customerType : ${customerTypeList}" th:value="${customerType.name}"
                                 th:text="${customerType.name}"></option>
                     </select>
