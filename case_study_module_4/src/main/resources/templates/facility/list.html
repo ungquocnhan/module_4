@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="/home :: head">
+</head>
+<body>
+<div id="main" class="vh-100">
+    <div th:insert="/home :: header">
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Name</th>
+            <th scope="col">Area</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Max people</th>
+            <th scope="col">Standard Room</th>
+            <th scope="col">Other convenience</th>
+            <th scope="col">Facility free</th>
+            <th scope="col">Pool area</th>
+            <th scope="col">Number of floors</th>
+            <th scope="col">Rent type</th>
+            <th scope="col">Facility type</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="facility, facilityStatus : ${facilityViewPage}">
+            <td th:text="${facilityStatus.count + facilityViewPage.number * facilityViewPage.size}"></td>
+            <td th:text="${facility.name}"></td>
+            <td th:text="${facility.area}"></td>
+            <td th:text="${facility.cost}"></td>
+            <td th:text="${facility.maxPeople}"></td>
+            <td th:text="${facility.standardRoom}"></td>
+            <td th:text="${facility.descriptionOtherConvenience}"></td>
+            <td th:text="${facility.facilityFree} != null ? ${facility.facilityFree} : ''"></td>
+            <td th:text="${facility.poolArea}"></td>
+            <td th:text="${facility.numberOfFloor}"></td>
+            <td th:text="${facility.rentTypeName}"></td>
+            <td th:text="${facility.facilityTypeName}"></td>
+            <td>
+                <a th:href="@{/facility/edit/__${facility.getId()}__}" class="btn btn-secondary btn-sm">Edit</a>
+            </td>
+            <td>
+                <button type="button" th:attr="onclick=|infoDelete('${facility.id}','${facility.name}');|"
+                        class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    Delete
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:insert="/home :: footer">
+    </div>
+</div>
+</body>
+</html>

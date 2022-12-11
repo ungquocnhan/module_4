@@ -1,15 +1,14 @@
-package com.case_study.case_study_module_4.model.customer;
+package com.test.test.model;
 
-import com.case_study.case_study_module_4.model.contract.Contract;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 
 @SQLDelete(sql = "UPDATE customer set flag = false where id = ?")
+@Where(clause = "1")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +31,6 @@ public class Customer {
     private boolean flag = true;
     @ManyToOne
     private CustomerType customerType;
-    @OneToMany(mappedBy = "customer")
-    private List<Contract> contractList;
 
 
     public Customer() {
@@ -117,13 +114,5 @@ public class Customer {
 
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType;
-    }
-
-    public List<Contract> getContractList() {
-        return contractList;
-    }
-
-    public void setContractList(List<Contract> contractList) {
-        this.contractList = contractList;
     }
 }

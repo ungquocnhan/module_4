@@ -35,7 +35,7 @@ public class CustomerController {
     }
 
     @ModelAttribute("customerTypeList")
-    public List<CustomerType> customerTypeList(){
+    public List<CustomerType> customerTypeList() {
         return customerTypeService.findAll();
     }
 
@@ -47,16 +47,16 @@ public class CustomerController {
     }
 
     @GetMapping("/create")
-    public String showFormCreate(Model model){
+    public String showFormCreate(Model model) {
         CustomerDto customerDto = new CustomerDto();
         model.addAttribute("customerDto", customerDto);
         return "customer/create";
     }
 
     @PostMapping("/save")
-    public String save(@Validated @ModelAttribute("customerDto") CustomerDto customerDto, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String save(@Validated @ModelAttribute("customerDto") CustomerDto customerDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws Exception {
         new CustomerDto().validate(customerDto, bindingResult);
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             return "customer/create";
         }
         Customer customer = new Customer();
@@ -67,19 +67,33 @@ public class CustomerController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showFormEdit(@PathVariable("id") int id, Model model){
+    public String showFormEdit(@PathVariable("id") int id, Model model) {
         Optional<Customer> customer = customerService.findById(id);
-        if(!customer.isPresent()){
+        if (!customer.isPresent()) {
             return "/error";
         }
         CustomerDto customerDto = new CustomerDto();
         BeanUtils.copyProperties(customer.get(), customerDto);
         model.addAttribute("customerDto", customerDto);
-        return "customer/create";
+//        return "customer/create";
+        return "customer/edit";
+    }
+
+    @PostMapping("/update")
+    public String update(@Validated @ModelAttribute("customerDto") CustomerDto customerDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) throws Exception {
+        new CustomerDto().validate(customerDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "customer/edit";
+        }
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(customerDto, customer);
+        customerService.save(customer);
+        redirectAttributes.addFlashAttribute("message", "Success");
+        return "redirect:/customer";
     }
 
     @PostMapping("/delete")
-    public String deleteCustomer(@RequestParam("deleteId") int id, RedirectAttributes redirectAttributes){
+    public String deleteCustomer(@RequestParam("deleteId") int id, RedirectAttributes redirectAttributes) {
         customerService.remove(id);
         redirectAttributes.addFlashAttribute("message", "Success");
         return "redirect:/customer";
