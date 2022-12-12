@@ -9,19 +9,19 @@ public interface FacilityView {
 
     String getName();
 
-    Integer getArea();
+    int getArea();
 
-    Double getCost();
+    double getCost();
 
-    Integer getMaxPeople();
+    int getMaxPeople();
 
     String getStandardRoom();
 
     String getDescriptionOtherConvenience();
 
-    Double getPoolArea();
+    double getPoolArea();
 
-    Integer getNumberOfFloor();
+    int getNumberOfFloor();
 
     String getFacilityFree();
 

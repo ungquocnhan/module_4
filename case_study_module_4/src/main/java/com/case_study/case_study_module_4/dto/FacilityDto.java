@@ -1,42 +1,23 @@
-package com.case_study.case_study_module_4.model.facility;
+package com.case_study.case_study_module_4.dto;
 
-import com.case_study.case_study_module_4.model.contract.Contract;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import com.case_study.case_study_module_4.model.facility.FacilityType;
+import com.case_study.case_study_module_4.model.facility.RentType;
 
-import javax.persistence.*;
-import java.util.List;
-
-@Entity
-@SQLDelete(sql = "UPDATE facility set flag = false where id = ?")
-@Where(clause = "1")
-public class Facility {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class FacilityDto {
     private int id;
-    @Column(columnDefinition = "varchar(45)")
     private String name;
     private int area;
     private double cost;
     private int maxPeople;
-    @Column(columnDefinition = "varchar(45)")
     private String standardRoom;
-    @Column(columnDefinition = "varchar(45)")
     private String descriptionOtherConvenience;
     private double poolArea;
     private int numberOfFloor;
-    @Column(columnDefinition = "text")
     private String facilityFree;
-    @ManyToOne
     private RentType rentType;
-    @ManyToOne
     private FacilityType facilityType;
-    @OneToMany(mappedBy = "facility")
-    private List<Contract> contractList;
-    @Column(columnDefinition = "bit")
-    private boolean flag = true;
 
-    public Facility() {
+    public FacilityDto() {
     }
 
     public int getId() {
@@ -133,21 +114,5 @@ public class Facility {
 
     public void setFacilityType(FacilityType facilityType) {
         this.facilityType = facilityType;
-    }
-
-    public List<Contract> getContractList() {
-        return contractList;
-    }
-
-    public void setContractList(List<Contract> contractList) {
-        this.contractList = contractList;
-    }
-
-    public boolean isFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
     }
 }

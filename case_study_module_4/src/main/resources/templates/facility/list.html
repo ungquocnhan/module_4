@@ -13,10 +13,10 @@
             <form class="d-flex">
                 <input class="form-control-sm me-2" type="search" name="name" placeholder="Name" th:value="${name}">
                 <div class="form-control-sm me-2">
-                    <select value="" type="search" name="facilityType">
+                    <select value="" type="search" name="facilityTypeName">
                         <option value="">Facility type</option>
                         <option th:each="facilityType : ${facilityTypeList}" th:value="${facilityType.name}"
-                                th:text="${facilityType.name}"></option>
+                                th:text="${facilityType.name}" th:selected="${facilityTypeName == facilityType.name}"></option>
                     </select>
                 </div>
                 <button class="btn btn-primary btn-sm" type="submit">Search</button>
@@ -58,9 +58,9 @@
             <td th:text="${facilityView.maxPeople}"></td>
             <td th:text="${facilityView.standardRoom}"></td>
             <td th:text="${facilityView.descriptionOtherConvenience}"></td>
-            <td th:text="${facilityView.facilityFree == null} ? ' ' : ${facilityView.facilityFree}"></td>
-            <td th:text="${facilityView.poolArea}"></td>
-            <td th:text="${facilityView.numberOfFloor}"></td>
+            <td th:text="${facilityView.facilityFree != null} ? ${facilityView.facilityFree} : ''"></td>
+            <td th:text="${facilityView.poolArea != 0} ? ${facilityView.poolArea} : ''"></td>
+            <td th:text="${facilityView.numberOfFloor != 0} ? ${facilityView.numberOfFloor} : ''"></td>
             <td th:text="${facilityView.rentTypeName}"></td>
             <td th:text="${facilityView.facilityTypeName}"></td>
             <td>
@@ -82,18 +82,42 @@
                 Total rows: [[${facilityViewPage.totalElements}]]
             </div>
             <div class="col-sm-1">
-                <a class="btn btn-sm btn-light" th:href="@{'/facility'(page=${facilityViewPage.number - 1})}"
+                <a class="btn btn-sm btn-light" th:href="@{/facility(page=${facilityViewPage.number - 1}, name = ${name}, facilityTypeName = ${facilityTypeName})}"
                    th:if="${facilityViewPage.hasPrevious()}">Previous</a>
             </div>
             <div class="col-sm-1">
                 <span th:each="i : ${#numbers.sequence(1, facilityViewPage.totalPages)}">
-                    <a class="text-danger" th:if="${(facilityViewPage.number + 1) != i}"  th:href="@{'/facility'(page=${i - 1})}">[[${i}]]</a>
+                    <a class="text-danger" th:if="${(facilityViewPage.number + 1) != i}"
+                       th:href="@{/facility(page=${i - 1}, name = ${name}, facilityTypeName = ${facilityTypeName})}">[[${i}]]</a>
                 <span th:unless="${(facilityViewPage.number + 1) != i}">[[${i}]]</span>
                 </span>
             </div>
             <div class="col-sm-1">
-                <a class="btn btn-sm btn-light" th:href="@{'/facility'(page=${facilityViewPage.number + 1})}"
+                <a class="btn btn-sm btn-light" th:href="@{/facility(page=${facilityViewPage.number + 1}, name = ${name}, facilityTypeName = ${facilityTypeName})}"
                    th:if="${facilityViewPage.hasNext()}">Next</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Delete -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete facility</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/facility/delete}" th:method="post">
+                    <div class="modal-body">
+                        <pre>Are you want to delete facility ?</pre>
+                        <pre style="color: darkred" id="deleteName"></pre>
+                    </div>
+                    <div class="modal-footer">
+                        <input name="deleteId" hidden id="deleteId">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -102,4 +126,10 @@
     </div>
 </div>
 </body>
+<script>
+    function infoDelete(id, name) {
+        document.getElementById("deleteId").value = id;
+        document.getElementById("deleteName").innerText = name;
+    }
+</script>
 </html>

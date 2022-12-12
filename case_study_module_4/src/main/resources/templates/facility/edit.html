@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="/home :: head">
+</head>
+<body>
+<div id="main" class="vh-100">
+    <div th:insert="/home :: header">
+    </div>
+    <nav class="navbar bg-light">
+        <div class="container-fluid">
+            <a href="/facility" class="btn bg-secondary btn-sm">Back list facility</a>
+            <h1>Facility Management</h1>
+            <form class="d-flex">
+                <input class="form-control-sm me-2" type="search" name="name" placeholder="Name" th:value="${name}">
+                <div class="form-control-sm me-2">
+                    <select value="" type="search" name="facilityType">
+                        <option value="">Facility type</option>
+                        <option th:each="facilityType : ${facilityTypeList}" th:value="${facilityType.name}"
+                                th:text="${facilityType.name}"></option>
+                    </select>
+                </div>
+                <button class="btn btn-primary btn-sm" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <form th:action="@{/facility/update}" method="post" id="show_form" th:object="${facilityDto}">
+        <input type="text" hidden th:field="*{id}">
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Facility type:</label>
+            <div class="col-sm-9">
+                <select class="custom-select" id="typeFacility" th:field="*{facilityType}" readonly>
+                    <option th:each="facilityType : ${facilityTypeList}" th:value="${facilityType.id}"
+                            th:text="${facilityType.name}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" th:for="name">Name facility:</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" th:field="*{name}" placeholder="Name facility">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" th:for="area">Area:</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" th:field="*{area}" placeholder="Area">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" th:for="cost">Cost</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="Cost" th:field="*{cost}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label" th:for="maxPeople">Max people</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" placeholder="Max people" th:field="*{maxPeople}">
+            </div>
+        </div>
+
+        <div class="form-group row" id="standardRoomDiv" style="display: block">
+            <label class="col-sm-3 col-form-label" th:for="standardRoom">Standard Room</label>
+            <div class="col-sm-9" style="float: right">
+                <input type="text" class="form-control" placeholder="Standard room" th:field="*{standardRoom}">
+            </div>
+        </div>
+
+        <div class="form-group row" style="display: block" id="descriptionOtherConvenienceDiv">
+            <label class="col-sm-3 col-form-label" th:for="descriptionOtherConvenience">Description other
+                convenience</label>
+            <div class="col-sm-9" style="float: right">
+                <input type="text" class="form-control" placeholder="Description other convenience"
+                       th:field="*{descriptionOtherConvenience}">
+            </div>
+        </div>
+
+        <div class="form-group row" style="display: block" id="poolAreaDiv">
+            <label class="col-sm-3 col-form-label" th:for="poolArea">Pool Area</label>
+            <div class="col-sm-9" style="float: right">
+                <input type="text" class="form-control" placeholder="Pool area" th:field="*{poolArea}">
+            </div>
+        </div>
+
+        <div class="form-group" style="display: block" id="numberOfFloorDiv">
+            <label class="col-sm-3 col-form-label" th:for="numberOfFloor">Number of floor</label>
+            <div class="col-sm-9" style="float: right">
+                <input type="text" class="form-control" placeholder="Number of floor" th:field="*{numberOfFloor}"
+                       value="0">
+            </div>
+        </div>
+
+        <div class="form-group" style="display: block" id="facilityFreeDiv">
+            <label class="col-sm-3 col-form-label" th:for="facilityFree">Facility free</label>
+            <div class="col-sm-9" style="float: right">
+                <input type="text" class="form-control" placeholder="Facility free" th:field="*{facilityFree}">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Rent Type:</label>
+            <div class="col-sm-9">
+                <select class="custom-select" th:field="*{rentType}">
+                    <option th:each="rentType : ${rentTypeList}" th:value="${rentType.id}"
+                            th:text="${rentType.name}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-3"></div>
+            <button type="submit" class="btn btn-primary col-sm-9">Save</button>
+        </div>
+
+    </form>
+
+    <div th:insert="/home :: footer">
+    </div>
+</div>
+<input id="facilityTypeId" type="text" th:value="${facilityTypeId}" hidden>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+<script>
+    let facilityTypeId = document.getElementById("facilityTypeId").value;
+    switch (facilityTypeId) {
+        case "1":
+            document.getElementById("facilityFreeDiv").style.display = "none";
+            break;
+        case "2":
+            document.getElementById("facilityFreeDiv").style.display = "none";
+            document.getElementById("poolAreaDiv").style.display = "none";
+            break;
+        case "3":
+            document.getElementById("numberOfFloorDiv").style.display = "none";
+            document.getElementById("poolAreaDiv").style.display = "none";
+            document.getElementById("descriptionOtherConvenienceDiv").style.display = "none";
+            document.getElementById("standardRoomDiv").style.display = "none";
+            break;
+    }
+
+</script>
+</html>
