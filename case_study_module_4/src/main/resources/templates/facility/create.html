@@ -65,14 +65,14 @@
             </div>
         </div>
 
-        <div class="form-group row" id="standardRoomDiv" style="display: block">
+        <div class="form-group row" id="standardRoomDiv">
             <label class="col-sm-3 col-form-label" th:for="standardRoom">Standard Room</label>
             <div class="col-sm-9" style="float: right">
                 <input type="text" class="form-control" placeholder="Standard room" th:field="*{standardRoom}">
             </div>
         </div>
 
-        <div class="form-group row" style="display: block" id="descriptionOtherConvenienceDiv">
+        <div class="form-group row" id="descriptionOtherConvenienceDiv">
             <label class="col-sm-3 col-form-label" th:for="descriptionOtherConvenience">Description other
                 convenience</label>
             <div class="col-sm-9" style="float: right">
@@ -81,14 +81,14 @@
             </div>
         </div>
 
-        <div class="form-group row" style="display: block" id="poolAreaDiv">
+        <div class="form-group row" id="poolAreaDiv">
             <label class="col-sm-3 col-form-label" th:for="poolArea">Pool Area</label>
             <div class="col-sm-9" style="float: right">
-                <input type="text" class="form-control" placeholder="Pool area" th:field="*{poolArea}" >
+                <input type="text" class="form-control" placeholder="Pool area" th:field="*{poolArea}">
             </div>
         </div>
 
-        <div class="form-group" style="display: block" id="numberOfFloorDiv">
+        <div class="form-group" id="numberOfFloorDiv">
             <label class="col-sm-3 col-form-label" th:for="numberOfFloor">Number of floor</label>
             <div class="col-sm-9" style="float: right">
                 <input type="text" class="form-control" placeholder="Number of floor" th:field="*{numberOfFloor}"
@@ -96,7 +96,7 @@
             </div>
         </div>
 
-        <div class="form-group" style="display: block" id="facilityFreeDiv">
+        <div class="form-group" id="facilityFreeDiv">
             <label class="col-sm-3 col-form-label" th:for="facilityFree">Facility free</label>
             <div class="col-sm-9" style="float: right">
                 <input type="text" class="form-control" placeholder="Facility free" th:field="*{facilityFree}">
@@ -125,22 +125,28 @@
 </body>
 <script>
     function selectTypeFacility() {
-        debugger
         let facilityType = document.getElementById("typeFacility").value;
-        debugger
         switch (facilityType) {
             case "1":
                 document.getElementById("facilityFreeDiv").style.display = "none";
+                document.getElementById("descriptionOtherConvenienceDiv").style.display = "block";
+                document.getElementById("standardRoomDiv").style.display = "block";
+                document.getElementById("numberOfFloorDiv").style.display = "block";
+                document.getElementById("poolAreaDiv").style.display = "block";
                 break;
             case "2":
                 document.getElementById("facilityFreeDiv").style.display = "none";
                 document.getElementById("poolAreaDiv").style.display = "none";
+                document.getElementById("numberOfFloorDiv").style.display = "block";
+                document.getElementById("standardRoomDiv").style.display = "block";
+                document.getElementById("descriptionOtherConvenienceDiv").style.display = "block";
                 break;
             case "3":
                 document.getElementById("numberOfFloorDiv").style.display = "none";
                 document.getElementById("poolAreaDiv").style.display = "none";
                 document.getElementById("descriptionOtherConvenienceDiv").style.display = "none";
                 document.getElementById("standardRoomDiv").style.display = "none";
+                document.getElementById("facilityFreeDiv").style.display = "block";
                 break;
         }
     }

@@ -41,11 +41,13 @@ public class CustomerController {
     }
 
     @GetMapping("")
-    public String showList(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "") String email, @RequestParam(defaultValue = "") String customerType, @PageableDefault(size = 5) Pageable pageable, Model model) {
-        Page<CustomerView> customerViewPage = customerService.findAllCustomerView(name, email, customerType, pageable);
+    public String showList(@RequestParam(defaultValue = "") String name, @RequestParam(defaultValue = "") String email, @RequestParam(defaultValue = "") String customerTypeName, @PageableDefault(size = 5) Pageable pageable, Model model) {
+        Page<CustomerView> customerViewPage = customerService.findAllCustomerView(name, email, customerTypeName, pageable);
         model.addAttribute("customerViewPage", customerViewPage);
         model.addAttribute("name", name);
         model.addAttribute("email", email);
+        model.addAttribute("customerTypeName", customerTypeName);
+
         return "customer/list";
     }
 

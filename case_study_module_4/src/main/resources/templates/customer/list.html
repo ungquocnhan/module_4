@@ -14,10 +14,10 @@
                 <input class="form-control-sm me-2" type="search" name="name" placeholder="Name" th:value="${name}">
                 <input class="form-control-sm me-2" type="search" name="email" placeholder="Email" th:value="${email}">
                 <div class="form-control-sm me-2">
-                    <select value="" type="search" name="customerType">
+                    <select value="" type="search" name="customerTypeName">
                         <option value="">Customer type</option>
                         <option th:each="customerType : ${customerTypeList}" th:value="${customerType.name}"
-                                th:text="${customerType.name}"></option>
+                                th:text="${customerType.name}" th:selected="${customerTypeName == customerType.name}"></option>
                     </select>
                 </div>
                 <button class="btn btn-primary btn-sm" type="submit">Search</button>
@@ -75,17 +75,17 @@
                 Total rows: [[${customerViewPage.totalElements}]]
             </div>
             <div class="col-sm-1">
-                <a class="btn btn-sm btn-light" th:href="@{'/customer'(page=${customerViewPage.number - 1})}"
+                <a class="btn btn-sm btn-light" th:href="@{/customer(page=${customerViewPage.number - 1}, name = ${name}, email = ${email}, customerTypeName = ${customerTypeName})}"
                    th:if="${customerViewPage.hasPrevious()}">Previous</a>
             </div>
             <div class="col-sm-1">
                 <span th:each="i : ${#numbers.sequence(1, customerViewPage.totalPages)}">
-                    <a class="text-danger" th:if="${(customerViewPage.number + 1) != i}"  th:href="@{'/customer'(page=${i - 1})}">[[${i}]]</a>
+                    <a class="text-danger" th:if="${(customerViewPage.number + 1) != i}"  th:href="@{/customer(page=${i - 1}, name = ${name}, email = ${email}, customerTypeName = ${customerTypeName})}">[[${i}]]</a>
                 <span th:unless="${(customerViewPage.number + 1) != i}">[[${i}]]</span>
                 </span>
             </div>
             <div class="col-sm-1">
-                <a class="btn btn-sm btn-light" th:href="@{'/customer'(page=${customerViewPage.number + 1})}"
+                <a class="btn btn-sm btn-light" th:href="@{'/customer'(page=${customerViewPage.number + 1}, name = ${name}, email = ${email}, customerTypeName = ${customerTypeName})}"
                    th:if="${customerViewPage.hasNext()}">Next</a>
             </div>
         </div>

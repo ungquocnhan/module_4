@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="/home :: head">
+</head>
+<body>
+<div id="main" class="vh-100">
+    <div th:insert="/home :: header">
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Name facility</th>
+            <th scope="col">Name customer</th>
+            <th scope="col">Deposit</th>
+            <th scope="col">DateStart</th>
+            <th scope="col">DateEnd</th>
+            <th scope="col">SumMoney</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody id="contractBody">
+        </tbody>
+    </table>
+
+    <div th:insert="/home :: footer">
+    </div>
+</div>
+</body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function init() {
+            debugger
+            $.ajax({
+                url: 'http://localhost:8080/contracts',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    debugger
+                    let table = "";
+                    for (let i = 0; i < data.content.length; i++) {
+                        table +=
+                            `
+                            <tr>
+                            <th scope="row" class="text-danger">${i + (data.pageable.pageNumber * data.pageable.pageSize) + 1}</th>
+                            <td>${data.content[i].facilityName}</td>
+                            <td>${data.content[i].customerName}</td>
+                            <td>${data.content[i].deposit}</td>
+                            <td>${data.content[i].dateStart}</td>
+                            <td>${data.content[i].dateEnd}</td>
+                            <td>${data.content[i].sumMoney}</td>
+                            </tr>
+                            `
+                    }
+                    $("#contractBody").append(table);
+                }
+            })
+        }
+
+        init();
+    })
+</script>
+</html>

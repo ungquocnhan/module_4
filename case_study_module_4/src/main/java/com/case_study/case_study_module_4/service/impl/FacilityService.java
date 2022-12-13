@@ -22,7 +22,7 @@ public class FacilityService implements IFacilityService {
 
     @Override
     public List<Facility> findAll() {
-        return null;
+        return facilityRepository.findAll();
     }
 
     @Override
