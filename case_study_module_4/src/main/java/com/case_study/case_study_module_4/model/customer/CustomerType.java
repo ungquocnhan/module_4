@@ -1,5 +1,7 @@
 package com.case_study.case_study_module_4.model.customer;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class CustomerType {
     @Column(columnDefinition = "varchar(45)")
     private String name;
     @OneToMany(mappedBy = "customerType")
+    @JsonBackReference
     private List<Customer> customerList;
 
     public CustomerType() {

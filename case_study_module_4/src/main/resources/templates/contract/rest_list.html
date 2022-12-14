@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <head th:insert="/home :: head">
 </head>
 <body>
@@ -7,7 +9,18 @@
     <div th:insert="/home :: header">
     </div>
 
-    <table class="table table-striped">
+    <nav class="navbar bg-light">
+        <div class="container-fluid">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContract">
+                Add new Contract
+            </button>
+            <h1>Contract Management</h1>
+            <form class="d-flex">
+            </form>
+        </div>
+    </nav>
+
+    <table class="table table-striped" >
         <thead>
         <tr>
             <th scope="col">STT</th>
@@ -20,29 +33,314 @@
             <th scope="col"></th>
         </tr>
         </thead>
-        <tbody id="contractBody">
+        <tbody id="contractList">
+        <tr th:each="contract, contractStatus : ${contractViewPage}">
+            <td th:text="${contractStatus.count + contractViewPage.number * contractViewPage.size}"></td>
+            <td th:text="${contract.facilityName}"></td>
+            <td th:text="${contract.customerName}"></td>
+            <td th:text="${contract.deposit != 0} ? ${contract.deposit} : ''"></td>
+            <td th:text="${contract.dateStart}"></td>
+            <td th:text="${contract.dateEnd}"></td>
+            <td th:text="${#numbers.formatDecimal(contract.sumMoney,6,0)}"></td>
+            <td>
+                <button type="button" th:value="${contract.id}" class="btn btn-primary contractDetailButton" data-bs-toggle="modal" data-bs-target="#addContractDetail">
+                    +
+                </button>
+            </td>
+        </tr>
         </tbody>
     </table>
+
+    <div th:if="${contractViewPage.totalPages > 1}">
+        <div class="row col-sm-10 justify-content-end">
+            <div class="col-sm-2">
+                Total rows: [[${contractViewPage.totalElements}]]
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-sm btn-light" th:href="@{/contracts/list(page=${contractViewPage.number - 1})}"
+                   th:if="${contractViewPage.hasPrevious()}">Previous</a>
+            </div>
+            <div class="col-sm-1">
+                <span th:each="i : ${#numbers.sequence(1, contractViewPage.totalPages)}">
+                    <a class="text-danger" th:if="${(contractViewPage.number + 1) != i}"
+                       th:href="@{/contracts/list(page=${i - 1})}">[[${i}]]</a>
+                <span th:unless="${(contractViewPage.number + 1) != i}">[[${i}]]</span>
+                </span>
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-sm btn-light" th:href="@{/contracts/list(page=${contractViewPage.number + 1})}"
+                   th:if="${contractViewPage.hasNext()}">Next</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add -->
+    <div class="modal fade" id="addContract" tabindex="-1" aria-labelledby="addContractLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addContractLabel">Add Contract</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="dateStart" class="col-form-label">Date start</label>
+                        <input type="date" class="form-control" id="dateStart" name="dateStart"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dateEnd" class="col-form-label">Date end</label>
+                        <input type="date" class="form-control" id="dateEnd" name="dateEnd"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deposit" class="col-form-label">Deposit</label>
+                        <input type="text" class="form-control" id="deposit" name="deposit"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="customer" class="col-form-label">Customer</label>
+                        <select class="custom-select form-control" id="customer" name="customer">
+                            <option class="defaultSelect">Customer</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="employee" class="col-form-label">Employee</label>
+                        <select class="custom-select form-control" id="employee" name="employee">
+                            <option class="defaultSelect">Employee</option>
+
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="facility" class="col-form-label">Facility</label>
+                        <select class="custom-select form-control" id="facility" name="facility">
+                            <option class="defaultSelect">Facility</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger btnAdd" id="addNew">Create contract</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Add -->
+    <div class="modal fade" id="addContractDetail" tabindex="-1" aria-labelledby="addContractDetailLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addContractDetailLabel">Add Contract Detail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="contract" class="col-form-label">Contract id</label>
+                        <input type="number" readonly class="form-control" id="contract" name="contract"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="attachFacility" class="col-form-label">Attach Facility</label>
+                        <select class="custom-select form-control" id="attachFacility" name="attachFacility">
+                            <option class="defaultSelect">Select Attach Facility</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="quantity" class="col-form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger btnAdd" id="addNewContractDetail">Create contract detail</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div th:insert="/home :: footer">
     </div>
 </div>
 </body>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function () {
-        function init() {
-            debugger
-            $.ajax({
-                url: 'http://localhost:8080/contracts',
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    debugger
-                    let table = "";
-                    for (let i = 0; i < data.content.length; i++) {
-                        table +=
-                            `
+
+    clickContractDetailButton();
+
+
+    $("#addNewContractDetail").click(function (){
+        let contractId = $("#contract").val();
+        let attachFacilityId = $("#attachFacility").val();
+        let quantity = $("#quantity").val();
+        let attachFacility = {
+            id: attachFacilityId
+        }
+        let contract = {
+            id: contractId
+        }
+        let contractDetail = {
+            contractId: contract,
+            attachFacility: attachFacility,
+            quantity: quantity
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: 'POST',
+            data: JSON.stringify(contractDetail),
+            url: "http://localhost:8080/contract-details",
+            success: function () {
+                $("#contractList").empty();
+                initContract();
+                $('#addContract').hide();
+                $('.modal-backdrop').hide();
+            }
+        })
+    })
+
+    function clickContractDetailButton(){
+        $(".contractDetailButton").click(function (){
+            initAttachFacilities();
+            let contractId = this.value;
+            document.getElementById("contract").value = contractId;
+        })
+    }
+
+
+    $("#addNew").click(function () {
+        let dateStart = $("#dateStart").val();
+        let dateEnd = $("#dateEnd").val();
+        let deposit = $("#deposit").val();
+        let customerId = $("#customer").val();
+        let employeeId = $("#employee").val();
+        let facilityId = $("#facility").val();
+        let customer = {
+            id: customerId
+        }
+        let employee = {
+            id: employeeId
+        }
+        let facility = {
+            id: facilityId
+        }
+        let contract = {
+            dateStart: dateStart,
+            dateEnd: dateEnd,
+            deposit: deposit,
+            customer: customer,
+            employee: employee,
+            facility: facility
+        };
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: 'POST',
+            data: JSON.stringify(contract),
+            url: "http://localhost:8080/contracts",
+            success: function () {
+                $("#contractList").empty();
+                initContract();
+                $('#addContractDetail').hide();
+                $('.modal-backdrop').hide();
+            }
+        })
+    })
+
+    $(".custom-select").click(function () {
+        $(".defaultSelect").hide();
+    })
+
+    function initCustomers() {
+        $.ajax({
+            url: 'http://localhost:8080/customers',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                let selectCustomer = "";
+                for (let i = 0; i < data.length; i++) {
+                    selectCustomer +=
+                        `<option value="${data[i].id}">${data[i].name}</option>
+                    `
+                }
+                $("#customer").append(selectCustomer);
+            }
+        })
+    }
+
+    initCustomers();
+
+    function initEmployees() {
+        $.ajax({
+            url: 'http://localhost:8080/employees',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                let selectEmployee = "";
+                for (let i = 0; i < data.length; i++) {
+                    selectEmployee +=
+                        `<option value="${data[i].id}">${data[i].name}</option>
+                    `
+                }
+                $("#employee").append(selectEmployee);
+            }
+        })
+    }
+
+    initEmployees();
+
+    function initFacilities() {
+        $.ajax({
+            url: 'http://localhost:8080/facilities',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                let selectFacilities = "";
+                for (let i = 0; i < data.length; i++) {
+                    selectFacilities +=
+                        `<option value="${data[i].id}">${data[i].name}</option>
+                    `
+                }
+                $("#facility").append(selectFacilities);
+            }
+        })
+    }
+
+    initFacilities();
+
+    function initAttachFacilities() {
+        $.ajax({
+            url: 'http://localhost:8080/attach-facilities',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                let selectAttachFacilities = "";
+                for (let i = 0; i < data.length; i++) {
+                    selectAttachFacilities +=
+                        `<option value="${data[i].id}">${data[i].name}</option>
+                    `
+                }
+                $("#attachFacility").append(selectAttachFacilities);
+            }
+        })
+    }
+
+    initAttachFacilities();
+
+    function initContract() {
+        $.ajax({
+            url: 'http://localhost:8080/contracts',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                let table = "";
+                for (let i = 0; i < data.content.length; i++) {
+                    table +=
+                        `
                             <tr>
                             <th scope="row" class="text-danger">${i + (data.pageable.pageNumber * data.pageable.pageSize) + 1}</th>
                             <td>${data.content[i].facilityName}</td>
@@ -51,15 +349,20 @@
                             <td>${data.content[i].dateStart}</td>
                             <td>${data.content[i].dateEnd}</td>
                             <td>${data.content[i].sumMoney}</td>
+                            <td>
+                            <button value="${data.content[i].id}" type="button" class="btn btn-primary contractDetailButton" data-bs-toggle="modal" data-bs-target="#addContractDetail">
+                            +
+                            </button>
+                            </td>
                             </tr>
                             `
-                    }
-                    $("#contractBody").append(table);
                 }
-            })
-        }
+                $("#contractList").append(table);
+            }
+        })
+        clickContractDetailButton();
+    }
 
-        init();
-    })
+
 </script>
 </html>

@@ -1,6 +1,7 @@
 package com.case_study.case_study_module_4.model.customer;
 
 import com.case_study.case_study_module_4.model.contract.Contract;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -33,6 +34,7 @@ public class Customer {
     @ManyToOne
     private CustomerType customerType;
     @OneToMany(mappedBy = "customer")
+    @JsonBackReference
     private List<Contract> contractList;
 
 

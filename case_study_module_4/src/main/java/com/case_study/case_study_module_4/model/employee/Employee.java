@@ -2,6 +2,7 @@ package com.case_study.case_study_module_4.model.employee;
 
 import com.case_study.case_study_module_4.model.contract.Contract;
 import com.case_study.case_study_module_4.model.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.List;
@@ -33,6 +34,7 @@ public class Employee {
     @Column(columnDefinition = "bit")
     private boolean flag = true;
     @OneToMany(mappedBy = "employee")
+    @JsonBackReference
     private List<Contract> contractList;
     @OneToOne
     private User user;

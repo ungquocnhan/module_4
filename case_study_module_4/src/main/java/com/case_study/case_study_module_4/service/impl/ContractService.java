@@ -29,7 +29,7 @@ public class ContractService implements IContractService {
 
     @Override
     public Optional<Contract> findById(int id) {
-        return Optional.empty();
+        return contractRepository.findById(id);
     }
 
     @Override

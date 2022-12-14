@@ -1,5 +1,7 @@
 package com.case_study.case_study_module_4.model.contract;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -16,6 +18,7 @@ public class AttachFacility {
     @Column(columnDefinition = "varchar(45)")
     private String status;
     @OneToMany(mappedBy = "attachFacility")
+    @JsonBackReference
     private List<ContractDetail> contractDetailList;
 
     public AttachFacility() {

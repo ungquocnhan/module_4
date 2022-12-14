@@ -44,11 +44,13 @@
         let page = 0;
 
         function init(page) {
+
             $.ajax({
                 url: 'http://localhost:8080/blogs?page=' + page,
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
+                    debugger
                     let myTable = "";
                     for (let i = 0; i < data.content.length; i++) {
                         myTable +=

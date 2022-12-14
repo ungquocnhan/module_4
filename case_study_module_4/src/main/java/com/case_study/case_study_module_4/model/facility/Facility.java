@@ -1,6 +1,7 @@
 package com.case_study.case_study_module_4.model.facility;
 
 import com.case_study.case_study_module_4.model.contract.Contract;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -32,6 +33,7 @@ public class Facility {
     @ManyToOne
     private FacilityType facilityType;
     @OneToMany(mappedBy = "facility")
+    @JsonBackReference
     private List<Contract> contractList;
     @Column(columnDefinition = "bit")
     private boolean flag = true;
