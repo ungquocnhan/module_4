@@ -41,4 +41,10 @@ public class ContractRestController {
         contractService.save(contract);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<List<ContractView>> getContractByCustomer(@PathVariable("id") int customerId){
+        List<ContractView> contractViewList = contractService.findAllContractCustomerUseFacility(customerId);
+        return new ResponseEntity<>(contractViewList, HttpStatus.OK);
+    }
 }

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<head th:insert="/home :: head">
+</head>
+<body>
+<div id="main" class="vh-100">
+    <div th:insert="/home :: header">
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Name</th>
+            <th scope="col">Id Card</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Customer Type</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer, customerStatus : ${customerUseFacilityList}">
+            <td th:text="${customerStatus.count + customerUseFacilityList.number * customerUseFacilityList.size}"></td>
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.idCard}"></td>
+            <td th:text="${customer.phoneNumber}"></td>
+            <td th:text="${customer.email}"></td>
+            <td th:text="${customer.address}"></td>
+            <td th:text="${customer.getCustomerTypeName()}"></td>
+            <td>
+                <button type="button" th:value="${customer.id}" class="btn btn-secondary btn-sm detailContract" data-bs-toggle="modal" data-bs-target="#detailContract">
+                    Detail
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${customerUseFacilityList.totalPages > 1}">
+        <div class="row col-sm-10 justify-content-end">
+            <div class="col-sm-2">
+                Total rows: [[${customerUseFacilityList.totalElements}]]
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-sm btn-light" th:href="@{/customer/customer-use-facility(page=${customerUseFacilityList.number - 1})}"
+                   th:if="${customerUseFacilityList.hasPrevious()}">Previous</a>
+            </div>
+            <div class="col-sm-1">
+                <span th:each="i : ${#numbers.sequence(1, customerUseFacilityList.totalPages)}">
+                    <a class="text-danger" th:if="${(customerUseFacilityList.number + 1) != i}"  th:href="@{/customer/customer-use-facility(page=${i - 1})}">[[${i}]]</a>
+                <span th:unless="${(customerUseFacilityList.number + 1) != i}">[[${i}]]</span>
+                </span>
+            </div>
+            <div class="col-sm-1">
+                <a class="btn btn-sm btn-light" th:href="@{/customer/customer-use-facility(page=${customerUseFacilityList.number + 1})}"
+                   th:if="${customerUseFacilityList.hasNext()}">Next</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal list contract-->
+    <div class="modal fade" id="detailContract" tabindex="-1" aria-labelledby="detailContractLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailContractLabel">Detail Contract</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped" >
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Contract Id</th>
+                            <th scope="col">Facility</th>
+                            <th scope="col">Total money</th>
+                            <th scope="col">Attach facility</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableListContract">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal list contract-->
+    <div class="modal fade" id="detailAttachFacility" tabindex="-1" aria-labelledby="detailAttachFacilityLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailAttachFacilityLabel">Detail Contract</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped" >
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Attach facility</th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableListAttachFacility">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:insert="/home :: footer">
+    </div>
+</div>
+</body>
+
+<script>
+
+    clickShowListContract();
+
+    function clickShowListContract(){
+        $(".detailContract").click(function (){
+            let customerId = this.value;
+            $.ajax({
+                url: "http://localhost:8080/contracts/customer/" + customerId,
+                type: 'GET',
+                data: 'json',
+                success: function (data){
+                    let tableContract = "";
+                    for (let i = 0; i < data.length; i++) {
+                        tableContract += `
+                        <tr>
+                        <td>${i + 1}</td>
+                        <td>${data[i].id}</td>
+                        <td>${data[i].facilityName}</td>
+                        <td>${data[i].sumMoney}</td>
+                        <td>
+                        <button type="button" value="${data[i].id}" class="btn btn-secondary btn-sm detailAttachFacility" data-bs-toggle="modal" data-bs-target="#detailAttachFacility">
+                        Attach Facility
+                        </button>
+                        </td>
+                        </tr>
+                        `
+                    }
+                    $("#tableListContract").empty();
+                    $("#tableListContract").append(tableContract);
+                    clickShowAttachFacility();
+                }
+            })
+        })
+
+        function clickShowAttachFacility(){
+            $(".detailAttachFacility").click(function (){
+                debugger
+                let contractId = this.value;
+                $.ajax({
+                    url: "http://localhost:8080/contract-details/" + contractId,
+                    type: 'GET',
+                    data: 'json',
+                    success: function (data){
+                        let tableAttachFacility = "";
+                        for (let i = 0; i < data.length; i++) {
+                            tableAttachFacility += `
+                                    <tr>
+                                    <td>${i + 1}</td>
+                                    <td>${data[i].attachFacilityName}</td>
+                                    <td>${data[i].quantity}</td>
+                                    </tr>
+                                    `
+                        }
+                        $("#tableListAttachFacility").empty();
+                        $("#tableListAttachFacility").append(tableAttachFacility);
+                    }
+                })
+            })
+        }
+    }
+</script>
+</html>

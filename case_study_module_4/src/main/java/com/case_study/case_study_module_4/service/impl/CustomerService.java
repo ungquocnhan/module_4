@@ -1,5 +1,6 @@
 package com.case_study.case_study_module_4.service.impl;
 
+import com.case_study.case_study_module_4.dto.CustomerUseFacility;
 import com.case_study.case_study_module_4.dto.CustomerView;
 import com.case_study.case_study_module_4.model.customer.Customer;
 import com.case_study.case_study_module_4.repository.ICustomerRepository;
@@ -25,6 +26,11 @@ public class CustomerService implements ICustomerService {
     @Override
     public Page<CustomerView> findAllCustomerView(String name, String email, String customerType, Pageable pageable) {
         return customerRepository.findAllCustomerView(name, email, customerType, pageable);
+    }
+
+    @Override
+    public Page<CustomerUseFacility> showList(Pageable pageable) {
+        return customerRepository.showList(pageable);
     }
 
     @Override

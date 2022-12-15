@@ -1,5 +1,6 @@
 package com.case_study.case_study_module_4.service.impl;
 
+import com.case_study.case_study_module_4.dto.ContractDetailView;
 import com.case_study.case_study_module_4.model.contract.ContractDetail;
 import com.case_study.case_study_module_4.repository.IContractDetailRepository;
 import com.case_study.case_study_module_4.service.IContractDetailService;
@@ -14,12 +15,12 @@ public class ContractDetailService implements IContractDetailService {
     private IContractDetailRepository contractDetailRepository;
     @Override
     public List<ContractDetail> findAll() {
-        return null;
+        return contractDetailRepository.findAll();
     }
 
     @Override
     public Optional<ContractDetail> findById(int id) {
-        return Optional.empty();
+        return contractDetailRepository.findById(id);
     }
 
     @Override
@@ -30,5 +31,10 @@ public class ContractDetailService implements IContractDetailService {
     @Override
     public void remove(int id) {
 
+    }
+
+    @Override
+    public List<ContractDetailView> showList(int contractId) {
+        return contractDetailRepository.showList(contractId);
     }
 }

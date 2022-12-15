@@ -1,6 +1,7 @@
 package com.case_study.case_study_module_4.controller;
 
 import com.case_study.case_study_module_4.dto.CustomerDto;
+import com.case_study.case_study_module_4.dto.CustomerUseFacility;
 import com.case_study.case_study_module_4.dto.CustomerView;
 import com.case_study.case_study_module_4.model.customer.Customer;
 import com.case_study.case_study_module_4.model.customer.CustomerType;
@@ -102,6 +103,13 @@ public class CustomerController {
         customerService.remove(id);
         redirectAttributes.addFlashAttribute("message", "Success");
         return "redirect:/customer";
+    }
+
+    @GetMapping("/customer-use-facility")
+    public String showListCustomerUseFacility(@PageableDefault(size = 5) Pageable pageable, Model model){
+        Page<CustomerUseFacility> customerUseFacilityList = customerService.showList(pageable);
+        model.addAttribute("customerUseFacilityList", customerUseFacilityList);
+        return "customer/customer_use_facility";
     }
 
     @ExceptionHandler(Exception.class)

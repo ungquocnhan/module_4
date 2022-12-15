@@ -31,6 +31,7 @@
             <th scope="col">DateEnd</th>
             <th scope="col">SumMoney</th>
             <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody id="contractList">
@@ -47,6 +48,11 @@
                     +
                 </button>
             </td>
+            <td>
+                <button type="button" th:value="${contract.id}" class="btn btn-primary listAttachFacility" data-bs-toggle="modal" data-bs-target="#listAttachFacility">
+                    List attach facility
+                </button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -57,24 +63,24 @@
                 Total rows: [[${contractViewPage.totalElements}]]
             </div>
             <div class="col-sm-1">
-                <a class="btn btn-sm btn-light" th:href="@{/contracts/list(page=${contractViewPage.number - 1})}"
+                <a class="btn btn-sm btn-light" th:href="@{/contract(page=${contractViewPage.number - 1})}"
                    th:if="${contractViewPage.hasPrevious()}">Previous</a>
             </div>
             <div class="col-sm-1">
                 <span th:each="i : ${#numbers.sequence(1, contractViewPage.totalPages)}">
                     <a class="text-danger" th:if="${(contractViewPage.number + 1) != i}"
-                       th:href="@{/contracts/list(page=${i - 1})}">[[${i}]]</a>
+                       th:href="@{/contract(page=${i - 1})}">[[${i}]]</a>
                 <span th:unless="${(contractViewPage.number + 1) != i}">[[${i}]]</span>
                 </span>
             </div>
             <div class="col-sm-1">
-                <a class="btn btn-sm btn-light" th:href="@{/contracts/list(page=${contractViewPage.number + 1})}"
+                <a class="btn btn-sm btn-light" th:href="@{/contract(page=${contractViewPage.number + 1})}"
                    th:if="${contractViewPage.hasNext()}">Next</a>
             </div>
         </div>
     </div>
 
-    <!-- Modal Add -->
+    <!-- Modal Add Contract-->
     <div class="modal fade" id="addContract" tabindex="-1" aria-labelledby="addContractLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -125,7 +131,7 @@
         </div>
     </div>
 
-    <!-- Modal Add -->
+    <!-- Modal Add Contract Detail-->
     <div class="modal fade" id="addContractDetail" tabindex="-1" aria-labelledby="addContractDetailLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -159,16 +165,70 @@
         </div>
     </div>
 
+
+    <!-- Modal list attach facility-->
+    <div class="modal fade" id="listAttachFacility" tabindex="-1" aria-labelledby="listAttachFacilityLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="listAttachFacilityLabel">Add Contract Detail</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped" >
+                        <thead>
+                        <tr>
+                            <th scope="col">STT</th>
+                            <th scope="col">Name attach facility</th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableListAttachFacility">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div th:insert="/home :: footer">
     </div>
 </div>
 </body>
 <script>
-
+    clickShowAttachFacility();
     clickContractDetailButton();
 
+    function clickShowAttachFacility(){
+        $(".listAttachFacility").click(function (){
+            let contractId = this.value;
+            $.ajax({
+                url: "http://localhost:8080/contract-details/" + contractId,
+                type: 'GET',
+                data: 'json',
+                success: function (data){
+                    let tableAttachFacility = "";
+                    for (let i = 0; i < data.length; i++) {
+                        tableAttachFacility += `
+                        <tr>
+                        <td>${i + 1}</td>
+                        <td>${data[i].attachFacilityName}</td>
+                        <td>${data[i].quantity}</td>
+                        </tr>
+                        `
+                    }
+                    $("#tableListAttachFacility").empty();
+                    $("#tableListAttachFacility").append(tableAttachFacility);
+                }
+            })
+        })
+    }
 
     $("#addNewContractDetail").click(function (){
+        debugger
         let contractId = $("#contract").val();
         let attachFacilityId = $("#attachFacility").val();
         let quantity = $("#quantity").val();
@@ -179,7 +239,7 @@
             id: contractId
         }
         let contractDetail = {
-            contractId: contract,
+            contract: contract,
             attachFacility: attachFacility,
             quantity: quantity
         }
@@ -194,7 +254,7 @@
             success: function () {
                 $("#contractList").empty();
                 initContract();
-                $('#addContract').hide();
+                $('#addContractDetail').hide();
                 $('.modal-backdrop').hide();
             }
         })
@@ -283,8 +343,7 @@
                 let selectEmployee = "";
                 for (let i = 0; i < data.length; i++) {
                     selectEmployee +=
-                        `<option value="${data[i].id}">${data[i].name}</option>
-                    `
+                        `<option value="${data[i].id}">${data[i].name}</option>`
                 }
                 $("#employee").append(selectEmployee);
             }
@@ -302,8 +361,7 @@
                 let selectFacilities = "";
                 for (let i = 0; i < data.length; i++) {
                     selectFacilities +=
-                        `<option value="${data[i].id}">${data[i].name}</option>
-                    `
+                        `<option value="${data[i].id}">${data[i].name}</option>`
                 }
                 $("#facility").append(selectFacilities);
             }
@@ -321,15 +379,12 @@
                 let selectAttachFacilities = "";
                 for (let i = 0; i < data.length; i++) {
                     selectAttachFacilities +=
-                        `<option value="${data[i].id}">${data[i].name}</option>
-                    `
+                        `<option value="${data[i].id}">${data[i].name}</option>`
                 }
                 $("#attachFacility").append(selectAttachFacilities);
             }
         })
     }
-
-    initAttachFacilities();
 
     function initContract() {
         $.ajax({
@@ -354,13 +409,19 @@
                             +
                             </button>
                             </td>
+                            <td>
+                            <button value="${data.content[i].id}" type="button" class="btn btn-primary listAttachFacility" data-bs-toggle="modal" data-bs-target="#listAttachFacility">
+                            List attach facility
+                            </button>
+                            </td>
                             </tr>
                             `
                 }
                 $("#contractList").append(table);
+                clickContractDetailButton();
+                clickShowAttachFacility();
             }
         })
-        clickContractDetailButton();
     }
 
 

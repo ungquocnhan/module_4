@@ -34,6 +34,9 @@
                         <button type="button" class="btn btn-success btn-sm px-3 me-2">
                             Login
                         </button>
+                        <a class="btn btn-success btn-sm px-3 me-2" th:if="${#request.userPrincipal != null}" th:href="@{/logout}">
+                            Logout
+                        </a>
                     </div>
                 </div>
             </div>
@@ -50,7 +53,17 @@
                         <a class="nav-link" href="#">Employee</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/customer">Customer</a>
+                        <div class="dropdown">
+                            <a class="btn btn-success dropdown-toggle text-dark" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Customer button
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="/customer">Customer</a></li>
+                                <li><a class="dropdown-item" href="/customer/customer-use-facility">Customer use facility</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+<!--                        <a class="nav-link" href="/customer">Customer</a>-->
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/facility">Facility</a>

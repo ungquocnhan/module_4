@@ -31,4 +31,12 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<User> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<User> likes) {
+        this.likes = likes;
+    }
 }

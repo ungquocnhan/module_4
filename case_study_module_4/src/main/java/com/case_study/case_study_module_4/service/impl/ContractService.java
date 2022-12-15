@@ -23,6 +23,11 @@ public class ContractService implements IContractService {
     }
 
     @Override
+    public List<ContractView> findAllContractCustomerUseFacility(int customerId) {
+        return contractRepository.findAllContractCustomerUseFacility(customerId);
+    }
+
+    @Override
     public List<Contract> findAll() {
         return null;
     }

@@ -85,7 +85,7 @@
                 </span>
             </div>
             <div class="col-sm-1">
-                <a class="btn btn-sm btn-light" th:href="@{'/customer'(page=${customerViewPage.number + 1}, name = ${name}, email = ${email}, customerTypeName = ${customerTypeName})}"
+                <a class="btn btn-sm btn-light" th:href="@{/customer(page=${customerViewPage.number + 1}, name = ${name}, email = ${email}, customerTypeName = ${customerTypeName})}"
                    th:if="${customerViewPage.hasNext()}">Next</a>
             </div>
         </div>

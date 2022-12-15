@@ -1,6 +1,7 @@
 package com.case_study.case_study_module_4.repository;
 
 import com.case_study.case_study_module_4.dto.CustomerDto;
+import com.case_study.case_study_module_4.dto.CustomerUseFacility;
 import com.case_study.case_study_module_4.dto.CustomerView;
 import com.case_study.case_study_module_4.model.customer.Customer;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
@@ -18,4 +20,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
             nativeQuery = true)
     Page<CustomerView> findAllCustomerView(@Param("name") String name, @Param("email") String email, @Param("customerType") String customerType, Pageable pageable);
 
+    @Query(value = "SELECT c.id, c.name, c.id_card as idCard, c.phone_number as phoneNumber, c.address , c.email, ct.name as customerTypeName FROM customer c JOIN contract ctr on c.id = ctr.customer_id JOIN customer_type ct on c.customer_type_id = ct.id GROUP BY c.id"
+            ,countQuery = "select * from (SELECT c.id, c.name, c.id_card as idCard, c.phone_number as phoneNumber, c.address , c.email, ct.name as customerTypeName FROM customer c JOIN contract ctr on c.id = ctr.customer_id JOIN customer_type ct on c.customer_type_id = ct.id GROUP BY c.id) as count_page", nativeQuery = true)
+    Page<CustomerUseFacility> showList(Pageable pageable);
 }
