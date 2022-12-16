@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinema</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar bg-light">
+    <div class="container-fluid">
+        <a href="/cinema" class="btn bg-secondary btn-sm">Back list Cinema</a>
+        <h1>Cinema Management</h1>
+    </div>
+</nav>
+<h1>Add Suat Chieu</h1>
+<form th:action="@{/cinema/save}" th:object="${suatChieuDto}" method="post">
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label" th:for="tenSuatChieu">Ten suat chieu:</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" th:field="*{tenSuatChieu}" placeholder="Ten suat chieu">
+        </div>
+        <p th:errors="*{tenSuatChieu}" class="text-danger"></p>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label" th:for="code">Ma suat chieu:</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" th:field="*{code}" placeholder="Ma suat chieu">
+            <p th:errors="*{code}" class="text-danger"></p>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label">Ten phim:</label>
+        <div class="col-sm-9">
+            <select class="custom-select" th:field="*{tenPhim}">
+                <option th:each="tenPhim : ${tenPhimList}" th:value="${tenPhim.id}"
+                        th:text="${tenPhim.name}"></option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label" th:for="ngayChieu">Ngay chieu:</label>
+        <div class="col-sm-9">
+            <input type="date" class="form-control" th:field="*{ngayChieu}" placeholder="Ngay chieu">
+        </div>
+        <p th:errors="*{ngayChieu}" class="text-danger"></p>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-3 col-form-label" th:for="amount">So luong:</label>
+        <div class="col-sm-9">
+            <input type="number" class="form-control" th:field="*{amount}" placeholder="So luong">
+        </div>
+        <p th:errors="*{amount}" class="text-danger"></p>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-9 offset-sm-3">
+            <input type="submit" class="btn btn-primary" value="Submit">
+            <input type="reset" class="btn btn-secondary" value="Reset">
+        </div>
+    </div>
+</form>
+</body>
+</html>
