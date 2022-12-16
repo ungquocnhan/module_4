@@ -16,6 +16,11 @@
         <h1>Cinema Management</h1>
     </div>
 </nav>
+<center>
+    <h2 th:if="${message != null}">
+        <span style="color: green" th:text="${message}"></span>
+    </h2>
+</center>
 <h1>Add Suat Chieu</h1>
 <form th:action="@{/cinema/save}" th:object="${suatChieuDto}" method="post">
     <div class="form-group row">

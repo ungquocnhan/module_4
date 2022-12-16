@@ -7,6 +7,7 @@ import com.demo.cinema.service.ISuatChieuService;
 import com.demo.cinema.service.ITenPhimService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,22 +46,29 @@ public class SuatChieuController {
     }
 
     @PostMapping("/save")
-    public String save(@Validated @ModelAttribute("suatChieuDto") SuatChieuDto suatChieuDto, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String save(@Validated @ModelAttribute("suatChieuDto") SuatChieuDto suatChieuDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         new SuatChieuDto().validate(suatChieuDto, bindingResult);
         if(bindingResult.hasErrors()){
             return "/create";
         }
         SuatChieu suatChieu = new SuatChieu();
         BeanUtils.copyProperties(suatChieuDto, suatChieu);
-        suatChieuService.save(suatChieu);
+        try {
+            suatChieuService.save(suatChieu);
+        } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addFlashAttribute("message", "Ma suat chieu duplicate. Please re-input!!!!!");
+            return "redirect:/cinema/create";
+        }
+
         redirectAttributes.addFlashAttribute("message", "Add success");
         return "redirect:/cinema";
     }
 
     @PostMapping("/delete")
-    public String delete(@RequestAttribute("deleteId") int id, RedirectAttributes redirectAttributes){
+    public String delete(@RequestParam("deleteId") int id, RedirectAttributes redirectAttributes){
         suatChieuService.remove(id);
         redirectAttributes.addFlashAttribute("message", "Delete success");
         return "redirect:/cinema";
     }
+
 }
