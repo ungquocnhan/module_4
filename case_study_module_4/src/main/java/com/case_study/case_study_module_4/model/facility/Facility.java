@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @SQLDelete(sql = "UPDATE facility set flag = false where id = ?")
-@Where(clause = "1")
+@Where(clause = "flag = true")
 public class Facility {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

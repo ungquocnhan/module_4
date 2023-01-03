@@ -11,6 +11,7 @@ import java.util.List;
 @Entity
 
 @SQLDelete(sql = "UPDATE customer set flag = false where id = ?")
+@Where(clause = "flag = true")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

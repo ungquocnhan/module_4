@@ -4,6 +4,8 @@ import com.case_study.case_study_module_4.model.customer.Customer;
 import com.case_study.case_study_module_4.model.employee.Employee;
 import com.case_study.case_study_module_4.model.facility.Facility;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,6 +21,7 @@ public class Contract {
     private String dateEnd;
     private double deposit;
     @ManyToOne
+//    @NotFound(action = NotFoundAction.IGNORE)
     private Facility facility;
     @ManyToOne
     private Customer customer;

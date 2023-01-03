@@ -16,6 +16,7 @@ public class SuatChieuDto implements Validator {
     private int id;
     @NotBlank(message = "Khong duoc de trong")
     @Pattern(regexp = "[0-9]{4}", message = "Chua 4 so")
+//    @UniqueCode
     private String code;
     private String tenSuatChieu;
     private String ngayChieu;

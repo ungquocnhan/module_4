@@ -5,10 +5,91 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94620ab2-0ff4-4870-b4de-61cc9630a648" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/exception.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/cinema/annotation/UniqueCode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/cinema/annotation/UniqueCodeValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/cinema/controller/SuatChieuRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/demo/cinema/dto/SuatChieuView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/controller/HoKhauController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/controller/ThanhVienRestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/model/customer/Customer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/model/customer/CustomerType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/model/phong_tro/PhongThue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/model/phong_tro/TypePay.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/model/so_ho_khau/HoKhau.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/model/so_ho_khau/ThanhVien.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/repository/IHoKhauRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/repository/IThanhVienRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/service/IHoKhauService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/service/IThanhVienService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/service/impl/HoKhauService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/java/com/example/test/service/impl/ThanhVienService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../test/src/main/resources/templates/list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/java/com/example/test_module4/controller/QuestionContentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/java/com/example/test_module4/dto/QuestionContentDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/java/com/example/test_module4/model/QuestionContent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/java/com/example/test_module4/model/QuestionType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/java/com/example/test_module4/repository/IQuestionContentRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/java/com/example/test_module4/repository/IQuestionTypeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/java/com/example/test_module4/service/IQuestionContentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/java/com/example/test_module4/service/IQuestionTypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/java/com/example/test_module4/service/impl/QuestionContentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/java/com/example/test_module4/service/impl/QuestionTypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/java/com/example/test_module4/view/QuestionContentView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-grid.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-grid.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-grid.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-grid.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-grid.rtl.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-reboot.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-reboot.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-reboot.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-reboot.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-reboot.rtl.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-utilities.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-utilities.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-utilities.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-utilities.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap-utilities.rtl.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap.rtl.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap.rtl.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap.rtl.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/css/bootstrap.rtl.min.css.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.esm.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.esm.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.esm.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.esm.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/static/bootstrap-5.0.2-dist/js/bootstrap.min.js.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/templates/create.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/templates/list.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/templates/message.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../test_module4/src/main/resources/templates/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/cinema/controller/SuatChieuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/cinema/controller/SuatChieuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/create.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/cinema/dto/SuatChieuDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/cinema/dto/SuatChieuDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/cinema/repository/ISuatChieuRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/cinema/repository/ISuatChieuRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/cinema/service/ISuatChieuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/cinema/service/ISuatChieuService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/demo/cinema/service/impl/SuatChieuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/demo/cinema/service/impl/SuatChieuService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +104,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -66,6 +147,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../case_study_module_4" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
@@ -91,7 +173,13 @@
       <option name="presentableId" value="Default" />
       <updated>1671156292680</updated>
       <workItem from="1671156294296" duration="10580000" />
-      <workItem from="1671195732640" duration="3418000" />
+      <workItem from="1671195732640" duration="3709000" />
+      <workItem from="1671334487310" duration="846000" />
+      <workItem from="1671371540642" duration="418000" />
+      <workItem from="1671372908541" duration="6278000" />
+      <workItem from="1671381583353" duration="2806000" />
+      <workItem from="1671412217924" duration="597000" />
+      <workItem from="1671415352356" duration="5278000" />
     </task>
     <servers />
   </component>

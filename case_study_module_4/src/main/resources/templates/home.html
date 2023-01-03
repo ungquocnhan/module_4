@@ -33,11 +33,13 @@
                     <div class="d-flex align-items-center">
 <!--                        <span sec:authorize="hasRole('USER')" class="text-primary">Người dùng</span>-->
 <!--                        <span sec:authorize="hasRole('ADMIN')" class="text-primary">Quản lý</span>-->
-                        <button type="button" class="btn btn-success btn-sm px-3 me-2" data-bs-toggle="modal" data-bs-target="#login" sec:authorize="!isAuthenticated()">
+<!--                        <button type="button" class="btn btn-success btn-sm px-3 me-2" data-bs-toggle="modal" data-bs-target="#login" sec:authorize="!isAuthenticated()">-->
+                        <button type="button" class="btn btn-success btn-sm px-3 me-2">
                             Login
                         </button>
 <!--                        <a class="btn btn-success btn-sm px-3 me-2" th:if="${#request.userPrincipal != null}" th:href="@{/logout}">-->
-                        <a class="btn btn-success btn-sm px-3 me-2" sec:authorize="isAuthenticated()" th:href="@{/logout}">
+<!--                        <a class="btn btn-success btn-sm px-3 me-2" sec:authorize="isAuthenticated()" th:href="@{/logout}">-->
+                        <a class="btn btn-success btn-sm px-3 me-2">
                             Logout
                         </a>
                     </div>
@@ -178,37 +180,39 @@
     </div>
 </div>
 
-<!-- Modal list attach facility-->
-<div class="modal fade" id="login" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginLabel"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <form class="form-signin" method="post" th:action="@{/login}">
-                        <h2 class="form-signin-heading">Please sign in</h2>
-                        <p>
-                            <label for="username" class="sr-only">Username</label>
-                            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-                        </p>
-                        <p>
-                            <label for="password" class="sr-only">Password</label>
-                            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-                        </p>
-                        <p><input type='checkbox' name='remember-me'/> Remember me on this computer.</p>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-</body>
+<!-- Modal login-->
+<!--<div class="modal fade" id="login" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="loginLabel"></h5>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div class="container">-->
+<!--&lt;!&ndash;                    <form class="form-signin" method="post" th:action="@{/login}">&ndash;&gt;-->
+<!--                    <form class="form-signin" method="post">-->
+<!--                        <h2 class="form-signin-heading">Please sign in</h2>-->
+<!--                        <p>-->
+<!--                            <label for="username" class="sr-only">Username</label>-->
+<!--                            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>-->
+<!--                        </p>-->
+<!--                        <p>-->
+<!--                            <label for="password" class="sr-only">Password</label>-->
+<!--                            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>-->
+<!--                        </p>-->
+<!--                        <p><input type='checkbox' name='remember-me'/> Remember me on this computer.</p>-->
+<!--                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
+
+</body>
 
 </html>

@@ -1,6 +1,7 @@
 package com.demo.cinema.controller;
 
 import com.demo.cinema.dto.SuatChieuDto;
+import com.demo.cinema.dto.SuatChieuView;
 import com.demo.cinema.model.SuatChieu;
 import com.demo.cinema.model.TenPhim;
 import com.demo.cinema.service.ISuatChieuService;
@@ -8,6 +9,9 @@ import com.demo.cinema.service.ITenPhimService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,9 +36,17 @@ public class SuatChieuController {
     }
 
     @GetMapping("")
-    public String showList(Model model){
-        List<SuatChieu> suatChieuList = suatChieuService.showList();
+    public String showList(@RequestParam(defaultValue = "") String ngayChieu,
+                           @RequestParam(defaultValue = "") String tenPhim,
+                           @RequestParam(defaultValue = "") String code,
+                           @PageableDefault(size = 5) Pageable pageable, Model model){
+//        List<SuatChieu> suatChieuList = suatChieuService.showList();
+        Page<SuatChieuView> suatChieuList = suatChieuService.search(ngayChieu, tenPhim, code, pageable);
         model.addAttribute("suatChieuList", suatChieuList);
+        model.addAttribute("ngayChieu", ngayChieu);
+        model.addAttribute("tenPhim", tenPhim);
+        model.addAttribute("code", code);
+
         return "/list";
     }
 
@@ -59,7 +71,7 @@ public class SuatChieuController {
             redirectAttributes.addFlashAttribute("message", "Ma suat chieu duplicate. Please re-input!!!!!");
             return "redirect:/cinema/create";
         }
-
+//        suatChieuService.save(suatChieu);
         redirectAttributes.addFlashAttribute("message", "Add success");
         return "redirect:/cinema";
     }
